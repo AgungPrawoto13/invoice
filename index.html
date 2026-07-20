@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Administrasi - Mitra Indah</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans min-h-screen flex flex-col items-center justify-center p-4">
+
+    <!-- CARD UTAMA -->
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-100 p-8 text-center">
+        
+        <!-- LOGO & HEADER -->
+        <div class="flex flex-col items-center mb-8">
+            <!-- Icon MI Keren -->
+            <img src="img/logo.png" alt="Logo Mitra Indah" class="h-16 w-auto object-contain">
+            <h1 class="text-2xl font-black text-blue-950 tracking-wide" style="-webkit-text-stroke: 0.5px currentColor;">
+                Mitra Indah
+            </h1>
+            <p class="text-xs font-bold tracking-widest text-gray-500 mt-1">
+                Interior Decoration
+            </p>
+            <div class="w-16 border-b-2 border-orange-400 mt-3"></div>
+        </div>
+
+        <p class="text-sm text-gray-600 mb-6 font-medium">
+            Silakan pilih sistem dokumen yang ingin Anda buat hari ini:
+        </p>
+
+        <!-- MENU TOMBOL NAVIGATION -->
+        <div class="space-y-4">
+            
+            <!-- Tombol ke Invoice -->
+            <a href="invoice.html" class="group flex items-center justify-between bg-blue-50 hover:bg-blue-900 border border-blue-200 hover:border-blue-900 text-blue-950 hover:text-white p-4 rounded-xl font-bold transition duration-200 shadow-sm active:scale-[0.98]">
+                <div class="flex items-center space-x-3 text-left">
+                    <span class="text-2xl group-hover:scale-110 transition duration-200">📄</span>
+                    <div>
+                        <p class="text-base font-extrabold tracking-wide">Buat Invoice / Nota</p>
+                        <p class="text-xs font-normal opacity-70 group-hover:text-gray-200">Pemesanan barang & rincian biaya</p>
+                    </div>
+                </div>
+                <span class="text-xl font-bold transform group-hover:translate-x-1 transition duration-200">➔</span>
+            </a>
+
+            <!-- Tombol ke Kwitansi -->
+            <a href="kwitansi.html" class="group flex items-center justify-between bg-orange-50 hover:bg-orange-600 border border-orange-200 hover:border-orange-600 text-orange-950 hover:text-white p-4 rounded-xl font-bold transition duration-200 shadow-sm active:scale-[0.98]">
+                <div class="flex items-center space-x-3 text-left">
+                    <span class="text-2xl group-hover:scale-110 transition duration-200">🧾</span>
+                    <div>
+                        <p class="text-base font-extrabold tracking-wide">Buat Kwitansi / Receipt</p>
+                        <p class="text-xs font-normal opacity-70 group-hover:text-gray-200">Bukti penerimaan uang terbilang</p>
+                    </div>
+                </div>
+                <span class="text-xl font-bold transform group-hover:translate-x-1 transition duration-200">➔</span>
+            </a>
+
+        </div>
+
+        <!-- FOOTER BERSID -->
+        <div class="mt-8 text-[10px] text-gray-400 font-medium tracking-wide">
+            &copy; 2026 Mitra Indah Interior. All Rights Reserved.
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kwitansi Resmi - Mitra Indah</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Mengunci tampilan agar warna & motif background tidak hilang saat diprint */
+        body, html, * { 
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        /* Pattern background bintik-bintik biru */
+        .pattern-bg {
+            background-image: radial-gradient(#3b82f6 1px, transparent 0);
+            background-size: 4px 4px;
+            background-color: #eff6ff !important;
+            opacity: 0.85;
+        }
+
+        @media print {
+            @page {
+                margin: 0;
+                size: auto;
+            }
+            body { 
+                background: transparent !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .no-print { display: none !important; }
+            
+            .print-card { 
+                border: none !important;
+                box-shadow: none !important;
+                padding: 2.5rem !important;
+                margin: 0 !important;
+                width: 100% !important;
+                max-w-none !important;
+            }
+
+            /* MEMAKSA STRUKTUR FORM SEJAJAR SAAT DICETAK (TIDAK TURUN KE BAWAH) */
+            .row-kwitansi {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+            }
+            .row-kwitansi-start {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: flex-start !important;
+            }
+            .label-kwitansi {
+                width: 13rem !important; /* 48 dalam skala tailwind */
+                flex-shrink: 0 !important;
+            }
+            .titik-dua {
+                display: inline-block !important;
+                margin-right: 0.75rem !important;
+                font-weight: bold !important;
+            }
+
+            /* MENGUNCI KOTAK NOMINAL RUPIAH AGAR TIDAK MELAR PAS DIPRINT */
+            .box-nominal {
+                width: 16rem !important; /* Mengunci lebar kotak bintik rupiah */
+                flex-shrink: 0 !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans min-h-screen py-6 px-4 flex flex-col items-center justify-start">
+
+    <!-- CONTAINER UTAMA -->
+    <div class="print-card w-full max-w-4xl bg-white rounded-lg shadow-md p-6 md:p-8 border border-gray-200 relative">
+        
+        <!-- HEADER KWITANSI -->
+        <div class="header-kwitansi-wrapper border-b-2 border-blue-900 pb-4 mb-6 flex flex-col md:flex-row justify-between items-start space-y-4 md:space-y-0">
+            <!-- Sisi Kiri: Logo & Info Perusahaan (Tetap Sama) -->
+            <div class="flex items-start space-x-3 text-blue-900">
+                <img src="img/logo.png" alt="Logo Mitra Indah" class="h-16 w-auto object-contain">
+                <div>
+                    <h1 class="text-2xl font-black tracking-wide" style="-webkit-text-stroke: 1px currentColor; paint-order: stroke fill;">Mitra Indah</h1>
+                    <p class="text-xs font-semibold tracking-wider text-gray-600">Interior Decoration</p>
+                    <p class="text-[10px] text-gray-500 mt-1 max-w-md leading-tight">
+                        Telp: Hp: 0817 388 196 | 0811 878 7196<br>
+                        Email: mitraindahinterior@gmail.com<br>
+                        Alamat : Metland Cileungsi Blok AA 17/26 Bogor 16820
+                    </p>
+                </div>
+            </div>
+
+            <!-- Sisi Kanan: Judul Kwitansi / Receipt (Sesuaikan Class Ini) -->
+            <div class="judul-kanan w-full md:w-auto self-center md:self-start flex flex-col items-center justify-center text-center">
+                <h2 class="text-xl md:text-2xl font-bold text-blue-900 tracking-widest uppercase">KWITANSI</h2>
+                <!-- Ditambah w-28 biar garisnya gak melar pas di-pdf -->
+                <div class="w-28 border-b border-blue-900 my-0.5"></div>
+                <h2 class="text-xl md:text-2xl font-bold text-blue-900 tracking-widest uppercase">RECEIPT</h2>
+            </div>
+        </div>
+
+        <!-- FORM ISIAN KWITANSI (DIKUNCI STABIL) -->
+        <div class="space-y-5 text-sm md:text-base">
+            
+            <!-- Row 1: Sudah Terima Dari -->
+            <div class="flex items-center w-full">
+                <!-- Lebar label dikunci pas -->
+                <div class="w-40 md:w-48 flex-shrink-0">
+                    <span class="font-medium text-gray-800 block border-b border-blue-900 inline-block">Sudah terima dari</span>
+                    <span class="text-xs text-blue-700 italic block font-light">Received from</span>
+                </div>
+                <div class="mr-3 font-bold text-gray-700">:</div>
+                <div class="flex-1">
+                    <input type="text" placeholder="..." class="w-full border-b border-dotted border-gray-400 bg-transparent focus:outline-none focus:border-blue-950 py-1 font-semibold text-gray-800">
+                </div>
+            </div>
+
+            <!-- Row 2: Jumlah Uang -->
+            <div class="flex items-start w-full">
+                <div class="w-40 md:w-48 flex-shrink-0 pt-1">
+                    <span class="font-medium text-gray-800 block border-b border-blue-900 inline-block">Jumlah uang</span>
+                    <span class="text-xs text-blue-700 italic block font-light">The amount of</span>
+                </div>
+                <div class="mr-3 font-bold text-gray-700 pt-1">:</div>
+                <div class="flex-1">
+                    <div class="w-full pattern-bg border border-blue-200 rounded p-2 min-h-[60px]">
+                        <textarea id="terbilang-text" placeholder="Terbilang kata..." rows="2" class="w-full bg-transparent resize-none focus:outline-none font-bold italic text-blue-950 text-lg md:text-xl tracking-wide leading-relaxed pt-1 pl-1" readonly></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 3: Untuk Pembayaran -->
+            <div class="flex items-start w-full">
+                <div class="w-40 md:w-48 flex-shrink-0">
+                    <span class="font-medium text-gray-800 block border-b border-blue-900 inline-block">Untuk Pembayaran</span>
+                    <span class="text-xs text-blue-700 italic block font-light">Payment For</span>
+                </div>
+                <div class="mr-3 font-bold text-gray-700">:</div>
+                <div class="flex-1 space-y-2">
+                    <input type="text" placeholder="..." class="w-full border-b border-dotted border-gray-400 bg-transparent focus:outline-none focus:border-blue-950 py-1 text-gray-800">
+                    <div class="w-full border-b border-dotted border-gray-400 pt-4"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FOOTER: NOMINAL RUPIAH & TANDA TANGAN -->
+        <div class="mt-8 pt-4 flex justify-between items-end w-full">
+            
+            <!-- Kotak Nominal Angka Rupiah (Kiri) -->
+            <div class="flex items-center">
+                <div class="bg-blue-900 text-white font-bold px-4 py-3 text-lg rounded-l flex-shrink-0">
+                    Rupiah
+                </div>
+                <!-- w-56 md:w-64 mengunci kotak agar lebarnya tetap segini pas diprint/layar biasa -->
+                <div class="w-56 md:w-64 pattern-bg border-y border-r border-blue-300 px-4 py-2 font-black text-xl text-blue-950 rounded-r flex items-center flex-shrink-0">
+                    <span class="mr-1 flex-shrink-0">Rp.</span>
+                    <input type="text" id="input-nominal" value="0" oninput="formatInputKwitansi(this)" class="w-full bg-transparent focus:outline-none text-left tracking-wide font-black">
+                </div>
+            </div>
+
+            <!-- Area Tanggal & Tanda Tangan (Kanan) -->
+            <div class="w-56 md:w-64 text-center flex flex-col items-center space-y-1 flex-shrink-0">
+                <div class="flex items-center space-x-1 justify-center w-full">
+                    <span class="text-sm text-gray-600">Jakarta, </span>
+                    <input type="date" id="tanggal-kwitansi" class="border-b border-gray-300 bg-transparent focus:outline-none text-sm w-32 py-0.5">
+                </div>
+                
+                <div class="h-20"></div>
+                
+                <div class="w-44 border-b border-dotted border-gray-500"></div>
+            </div>
+        </div>
+
+        <!-- TOMBOL AKSI (Disembunyikan saat cetak) -->
+        <div class="mt-8 flex justify-end no-print">
+            <button onclick="window.print()" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded shadow transition text-sm">
+                Cetak / Simpan PDF Kwitansi
+            </button>
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Fungsi format nominal ribuan dan auto hitung fungsi "Terbilang"
+        function formatInputKwitansi(input) {
+            // Ambil angka saja
+            let value = input.value.replace(/[^0-9]/g, '');
+            
+            if (value) {
+                // Tampilkan format titik ribuan di kolom input rupiah
+                input.value = new Intl.NumberFormat('id-ID').format(value);
+                
+                // Ambil hasil ejaan hurufnya
+                let hasilTerbilang = kekata(parseInt(value));
+                
+                // Bungkus dengan tanda kurung () dan tambahkan kata Rupiah di ujungnya
+                document.getElementById('terbilang-text').value = "(" + hasilTerbilang + " Rupiah)";
+            } else {
+                input.value = '0';
+                document.getElementById('terbilang-text').value = '';
+            }
+        }
+
+        // Fungsi konversi angka matematika ke ejaan huruf Indonesia secara detail
+        function kekata(angka) {
+            const bil = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
+            if (angka < 12) return bil[angka];
+            else if (angka < 20) return kekata(angka - 10) + " Belas";
+            else if (angka < 100) return kekata(Math.floor(angka / 10)) + " Puluh " + (angka % 10 !== 0 ? " " + kekata(angka % 10) : "");
+            else if (angka < 200) return "Seratus" + (angka - 100 !== 0 ? " " + kekata(angka - 100) : "");
+            else if (angka < 1000) return kekata(Math.floor(angka / 100)) + " Ratus" + (angka % 100 !== 0 ? " " + kekata(angka % 100) : "");
+            else if (angka < 2000) return "Seribu" + (angka - 1000 !== 0 ? " " + kekata(angka - 1000) : "");
+            else if (angka < 1000000) return kekata(Math.floor(angka / 1000)) + " Ribu" + (angka % 1000 !== 0 ? " " + kekata(angka % 1000) : "");
+            else if (angka < 1000000000) return kekata(Math.floor(angka / 1000000)) + " Juta" + (angka % 1000000 !== 0 ? " " + kekata(angka % 1000000) : "");
+            return "";
+        }
+    </script>
+</body>
+</html>
