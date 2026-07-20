@@ -19,6 +19,14 @@
                 background: transparent;
                 text-align-last: center; /* Tetap di tengah */
             }
+            .no-print {
+                display: none !important;
+            }
+            
+            /* Matikan semua efek hover/pointer dari browser saat cetak */
+            * {
+                pointer-events: none !important;
+            }
         }
     </style>
 </head>
@@ -160,21 +168,23 @@
             </div>
         </div>
 
-        <!-- ACTION BUTTONS -->
-        <div class="flex justify-between pt-4 text-center text-xs mt-4">
-            <div>
-                <p class="mb-16">Pemesanan</p>
+       <div class="flex justify-between items-end pt-4 text-center text-xs mt-4">
+            <!-- Bagian Kiri (Pemesanan) -->
+            <div class="flex flex-col justify-between h-32">
+                <p>Pemesanan</p>
                 <p>( ____________________ )</p>
             </div>
-            <div class="pr-6">
-                <img src="img/stampel.png" alt="Logo Mitra Indah" class="h-32 w-auto object-contain print:h-32">
+
+            <!-- Bagian Kanan (Stempel & Nama) -->
+            <div class="flex flex-col items-center">
+                <img src="img/stampel.png" alt="Logo Mitra Indah" class="h-32 w-auto object-contain print:h-32" style="pointer-events: none !important;">
                 <p class="font-semibold text-gray-750">Mitra Indah</p>
             </div>
         </div>
 
         <!-- ACTION BUTTONS (Sembunyikan saat dicetak & ukurannya normal) -->
         <div class="mt-8 flex justify-end no-print">
-            <button onclick="window.print()" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded shadow transition text-sm">
+            <button onclick="cetakPDF()" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded shadow transition text-sm">
                 Cetak / Simpan PDF
             </button>
         </div>
@@ -184,6 +194,32 @@
     <script>
         // Set tanggal hari ini secara otomatis saat halaman dibuka
         document.getElementById('tanggal-nota').valueAsDate = new Date();
+
+        function cetakPDF() {
+            // 1. Hilangkan fokus dari tombol/input agar hover state hilang
+            if (document.activeElement) {
+                document.activeElement.blur();
+            }
+
+            // 2. Ambil wadah/tombol cetak dan sembunyikan sementara secara paksa
+            const printBtnContainer = document.querySelector('.no-print');
+            if (printBtnContainer) {
+                printBtnContainer.style.display = 'none';
+            }
+
+            // 3. Pindahkan kursor/fokus ke paling atas dokumen
+            window.scrollTo(0, 0);
+
+            // 4. Beri jeda 150ms agar browser sempat merestart tampilan tanpa hover/kursor
+            setTimeout(() => {
+                window.print();
+
+                // 5. Munculkan kembali tombolnya setelah dialog print ditutup
+                if (printBtnContainer) {
+                    printBtnContainer.style.display = 'flex';
+                }
+            }, 150);
+        }
 
         // Fungsi Tambah Baris
         function addRow() {
