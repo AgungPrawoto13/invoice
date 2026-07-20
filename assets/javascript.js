@@ -1,0 +1,171 @@
+// Set tanggal hari ini secara otomatis saat halaman dibukadocument.getElementById('tanggal-nota').valueAsDate = new Date();
+ 
+// 1. Munculkan nomor '1. ' otomatis saat textarea pertama kali diklik/fokus
+function initNumbering(el) {
+    if (el.value.trim() === '') {
+        el.value = '1. ';
+    }
+}
+
+// 2. Buat penomoran otomatis saat menekan tombol Enter
+function autoNumbering(e, el) {
+    if (e.key === 'Enter') {
+        e.preventDefault(); // Cegah enter biasa
+
+        // Hitung ada berapa baris saat ini untuk menentukan nomor berikutnya
+        const lines = el.value.split('\n');
+        const nextNumber = lines.length + 1;
+
+        // Tambahkan baris baru + nomor berikutnya
+        el.value += '\n' + nextNumber + '. ';
+
+        // Trigger event input agar tinggi textarea menyesuaikan otomatis
+        el.dispatchEvent(new Event('input'));
+    }
+}
+
+function cetakPDF() {
+    // 1. Hilangkan fokus dari tombol/input agar hover state hilang
+    if (document.activeElement) {
+        document.activeElement.blur();
+    }
+
+    // 2. Ambil wadah/tombol cetak dan sembunyikan sementara secara paksa
+    const printBtnContainer = document.querySelector('.no-print');
+    if (printBtnContainer) {
+        printBtnContainer.style.display = 'none';
+    }
+
+    // 3. Pindahkan kursor/fokus ke paling atas dokumen
+    window.scrollTo(0, 0);
+
+    // 4. Beri jeda 150ms agar browser sempat merestart tampilan tanpa hover/kursor
+    setTimeout(() => {
+        window.print();
+
+        // 5. Munculkan kembali tombolnya setelah dialog print ditutup
+        if (printBtnContainer) {
+            printBtnContainer.style.display = 'flex';
+        }
+    }, 150);
+}
+
+// Fungsi Tambah Baris
+function addRow() {
+    const tbody = document.getElementById('item-rows');
+    const newRow = document.createElement('tr');
+    newRow.className = "border-b border-gray-200 item-row";
+    newRow.innerHTML = `
+        <td class="p-2 text-center">
+            <input type="number" value="1" min="1" oninput="calculateTotal()" class="qty w-full text-center bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm">
+        </td>
+        <td class="p-2 text-center">
+            <select class="w-full bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm text-center focus:outline-none appearance-none">
+                <option value="pcs">Pcs</option>
+                <option value="m&sup2">m&sup2;</option>
+                <option value="meter">Mtr</option>
+                <option value="roll">Roll</option>
+                <option value="Box">Box</option>
+                <option value="set">Set</option>
+            </select>
+        </td>
+        <td class="p-2">
+            <input type="text" placeholder="Nama barang..." class="w-full bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm">
+        </td>
+        <td class="p-2">
+            <input type="text" value="0" oninput="formatInputRupiah(this); calculateTotal();" class="price w-full text-right bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm">
+        </td>
+        <td class="p-2 text-right font-medium text-sm pr-4 row-total">Rp 0</td>
+    `;
+    tbody.appendChild(newRow);
+    calculateTotal();
+}
+
+// Helper mengubah angka jadi format tampilan "Rp 800.000"
+function formatRupiah(angka) {
+    return 'Rp ' + Math.round(angka).toLocaleString('id-ID');
+}
+
+// Helper untuk format otomatis saat ketik di input DP
+function formatInputRupiah(input) {
+    let value = input.value.replace(/[^0-9]/g, '');
+    if (value) {
+        input.value = parseInt(value, 10).toLocaleString('id-ID');
+    } else {
+        input.value = '0';
+    }
+}
+
+// Fungsi Hapus Baris
+function deleteLastRow() {
+    const tbody = document.getElementById('item-rows');
+    if (tbody.rows.length > 1) {
+        tbody.deleteRow(-1);
+        calculateTotal();
+    } else {
+        alert("Minimal harus ada 1 barang di dalam nota!");
+    }
+}
+
+// FUNGSI UTAMA HITUNG TOTAL & DISKON
+function calculateTotal() {
+    let grandTotal = 0;
+    const rows = document.querySelectorAll('.item-row');
+
+    // 1. Hitung Subtotal
+    rows.forEach(row => {
+        const qty = parseFloat(row.querySelector('.qty')?.value) || 0;
+        const priceRaw = row.querySelector('.price')?.value.replace(/[^0-9]/g, '') || "0";
+        const price = parseFloat(priceRaw) || 0;
+        
+        const totalRow = qty * price;
+        grandTotal += totalRow;
+        
+        const rowTotalEl = row.querySelector('.row-total');
+        if (rowTotalEl) rowTotalEl.innerText = formatRupiah(totalRow);
+    });
+
+    // 2. Ambil Nilai Diskon
+    const discountType = document.getElementById('discount-type')?.value || 'percent';
+    const discountInputEl = document.getElementById('discount');
+    
+    let discountRaw = discountInputEl ? discountInputEl.value.replace(/[^0-9]/g, '') : "0";
+    let discountValue = parseFloat(discountRaw) || 0;
+
+    let discountRupiah = 0;
+
+    if (discountType === 'percent') {
+        // Proteksi: Jika persen > 100, batasi maksimal 100%
+        if (discountValue > 100) {
+            discountValue = 100;
+            if (discountInputEl) discountInputEl.value = '100';
+        }
+        discountRupiah = grandTotal * (discountValue / 100);
+    } else {
+        discountRupiah = discountValue;
+    }
+
+    // 3. Ambil Nilai DP
+    const dpRaw = document.getElementById('input-dp')?.value.replace(/[^0-9]/g, '') || "0";
+    const dp = parseFloat(dpRaw) || 0;
+
+    // 4. Hitung Sisa
+    let sisa = grandTotal - discountRupiah - dp;
+    if (sisa < 0) sisa = 0;
+
+    // 5. Update HTML
+    const totalJumlahEl = document.getElementById('total-jumlah');
+    const totalSisaEl = document.getElementById('total-sisa');
+
+    if (totalJumlahEl) totalJumlahEl.innerText = formatRupiah(grandTotal);
+    if (totalSisaEl) totalSisaEl.innerText = formatRupiah(sisa);
+}
+
+// 6. Fungsi Reset Input saat Dropdown Berganti Tipe (PENTING!)
+function handleDiscountTypeChange() {
+    const discountInputEl = document.getElementById('discount');
+    if (discountInputEl) {
+        discountInputEl.value = '0'; // Reset ke 0 saat opsi berubah
+    }
+    calculateTotal();
+}
