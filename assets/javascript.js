@@ -116,6 +116,7 @@ function addRowPenawaran() {
     `;
 
     itemList.appendChild(newRow);
+    updateRowNumbers();
     calculateTotal();
 }
 
@@ -152,13 +153,28 @@ function deleteLastRow() {
 
 // Hapus baris barang
 function removeRow(btn) {
-    const rows = document.querySelectorAll('.item-row');
-    if (rows.length > 1) {
-        btn.closest('.item-row').remove();
-        calculateTotal();
-    } else {
-        alert('Minimal harus ada 1 baris penawaran barang!');
+    // 1. Hapus baris item yang diklik
+    const row = btn.closest('.item-row');
+    if (row) {
+        row.remove();
     }
+
+    // 2. HITUNG ULANG NOMOR URUT (Re-indexing)
+    updateRowNumbers();
+
+    // 3. Hitung ulang Total Harga Penawaran
+    calculateTotalPenawaran();
+}
+
+// Fungsi Khusus Menata Ulang Nomor dari 1
+function updateRowNumbers() {
+    const rows = document.querySelectorAll('#item-list .item-row');
+    rows.forEach((row, index) => {
+        const numSpan = row.querySelector('.row-num');
+        if (numSpan) {
+            numSpan.textContent = (index + 1) + '.';
+        }
+    });
 }
 
 // Hitung total per baris dan grand total
