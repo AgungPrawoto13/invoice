@@ -4,7 +4,7 @@
 function initNumbering(el) {
     if (el.value.trim() === '') {
         el.value = '1. ';
-    }
+    } 
 }
 
 // 2. Buat penomoran otomatis saat menekan tombol Enter
@@ -108,11 +108,12 @@ function deleteLastRow() {
 }
 
 // FUNGSI UTAMA HITUNG TOTAL & DISKON
+// FUNGSI UTAMA HITUNG TOTAL, DISKON & DP
 function calculateTotal() {
     let grandTotal = 0;
     const rows = document.querySelectorAll('.item-row');
 
-    // 1. Hitung Subtotal
+    // 1. Hitung Subtotal dari semua baris barang
     rows.forEach(row => {
         const qty = parseFloat(row.querySelector('.qty')?.value) || 0;
         const priceRaw = row.querySelector('.price')?.value.replace(/[^0-9]/g, '') || "0";
@@ -128,14 +129,11 @@ function calculateTotal() {
     // 2. Ambil Nilai Diskon
     const discountType = document.getElementById('discount-type')?.value || 'percent';
     const discountInputEl = document.getElementById('discount');
-    
     let discountRaw = discountInputEl ? discountInputEl.value.replace(/[^0-9]/g, '') : "0";
     let discountValue = parseFloat(discountRaw) || 0;
 
     let discountRupiah = 0;
-
     if (discountType === 'percent') {
-        // Proteksi: Jika persen > 100, batasi maksimal 100%
         if (discountValue > 100) {
             discountValue = 100;
             if (discountInputEl) discountInputEl.value = '100';
@@ -145,15 +143,39 @@ function calculateTotal() {
         discountRupiah = discountValue;
     }
 
-    // 3. Ambil Nilai DP
-    const dpRaw = document.getElementById('input-dp')?.value.replace(/[^0-9]/g, '') || "0";
-    const dp = parseFloat(dpRaw) || 0;
+    // Hitung Total Setelah Diskon
+    const totalSetelahDiskon = grandTotal - discountRupiah;
 
-    // 4. Hitung Sisa
-    let sisa = grandTotal - discountRupiah - dp;
+    // 3. Ambil Nilai DP (Bisa Rp atau %)
+    const dpType = document.getElementById('dp-type')?.value || 'nominal';
+    const dpInputEl = document.getElementById('input-dp');
+    let dpRaw = dpInputEl ? dpInputEl.value.replace(/[^0-9]/g, '') : "0";
+    let dpValue = parseFloat(dpRaw) || 0;
+
+    let dpRupiah = 0;
+    if (dpType === 'percent') {
+        if (dpValue > 100) {
+            dpValue = 100;
+            if (dpInputEl) dpInputEl.value = '100';
+        }
+        // DP % dihitung dari Total Setelah Diskon
+        dpRupiah = totalSetelahDiskon * (dpValue / 100);
+    } else {
+        dpRupiah = dpValue;
+    }
+
+    // 4. Hitung Sisa Akhir
+    let sisa = totalSetelahDiskon - dpRupiah;
     if (sisa < 0) sisa = 0;
 
-    // 5. Update HTML
+    // 5. Update Label Print (Persen / Rp) untuk PDF
+    const discountLabelPrint = document.getElementById('discount-label-print');
+    if (discountLabelPrint) discountLabelPrint.innerText = (discountType === 'percent') ? '(%)' : '(Rp)';
+
+    const dpLabelPrint = document.getElementById('dp-label-print');
+    if (dpLabelPrint) dpLabelPrint.innerText = (dpType === 'percent') ? '(%)' : '(Rp)';
+
+    // 6. Update Tampilan HTML Total
     const totalJumlahEl = document.getElementById('total-jumlah');
     const totalSisaEl = document.getElementById('total-sisa');
 
@@ -161,11 +183,30 @@ function calculateTotal() {
     if (totalSisaEl) totalSisaEl.innerText = formatRupiah(sisa);
 }
 
-// 6. Fungsi Reset Input saat Dropdown Berganti Tipe (PENTING!)
+// FUNGSI PENDUKUNG: Reset & Format Input DP
+function handleDpTypeChange() {
+    const dpInputEl = document.getElementById('input-dp');
+    if (dpInputEl) {
+        dpInputEl.value = '0';
+    }
+    calculateTotal();
+}
+
 function handleDiscountTypeChange() {
     const discountInputEl = document.getElementById('discount');
     if (discountInputEl) {
-        discountInputEl.value = '0'; // Reset ke 0 saat opsi berubah
+        discountInputEl.value = '0';
     }
     calculateTotal();
+}
+
+function formatInputDP(input) {
+    const dpType = document.getElementById('dp-type')?.value || 'nominal';
+    let val = input.value.replace(/[^0-9]/g, '');
+    
+    if (dpType === 'nominal' && val) {
+        input.value = parseInt(val, 10).toLocaleString('id-ID');
+    } else {
+        input.value = val; // Jika %, biarkan angka murni tanpa titik ribuan
+    }
 }

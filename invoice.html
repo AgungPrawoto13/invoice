@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generator Nota Pesanan - Mitra Indah</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="assets/javascript.js"></script>
+    <script src="assets/javascript.js"></script> 
     <style>
         @media print {
             body { background: white; color: black; }
@@ -169,15 +169,7 @@
                     <span>JUMLAH Rp.</span>
                     <span id="total-jumlah" class="font-bold">Rp 0</span>
                 </div>
-                <div class="flex justify-between items-center text-gray-700">
-                    <span>DP Rp.</span>
-                    <input 
-                        type="text" 
-                        id="input-dp" 
-                        placeholder="0"
-                        oninput="formatInputRupiah(this); calculateTotal();" 
-                        class="text-right bg-transparent border border-transparent rounded p-1 w-36 text-sm focus:outline-none focus:border-blue-900">
-                </div>
+
                 <!-- Input Diskon % -->
                 <div class="flex justify-between items-center py-1">
                     <div class="flex items-center space-x-1">
@@ -194,11 +186,35 @@
                     
                     <!-- Input Angka Diskon -->
                     <input 
-                        type="number" 
+                        type="text" 
                         id="discount" 
                         placeholder="0" 
-                        oninput="calculateTotal(); formatInputRupiah(this);" 
-                        class="border-b bg-transparent  border border-transparent border-gray-300 focus:outline-none focus:border-blue-900 text-right w-28 px-1 py-0.5 text-sm">
+                        oninput="formatInputDP(this); calculateTotal();" 
+                        class="border-b border-gray-300 focus:outline-none focus:border-blue-900 text-right w-28 px-1 py-0.5 text-sm">
+                </div>
+
+                <!-- Input DP -->
+                <div class="flex justify-between items-center py-1">
+                    <div class="flex items-center space-x-1">
+                        <span class="font-medium text-gray-700">DP</span>
+                        <!-- Dropdown Tipe DP -->
+                        <select id="dp-type" onchange="handleDpTypeChange()" class="print:hidden border border-gray-300 rounded text-xs px-1 py-0.5 focus:outline-none focus:border-blue-900 bg-white">
+                            <option value="nominal">Rp</option>
+                            <option value="percent">%</option>
+                        </select>
+                        <!-- Label saat dicetak PDF -->
+                        <span id="dp-label-print" class="hidden print:inline font-medium text-gray-700">(Rp)</span>
+                        <span class="font-medium text-gray-700">:</span>
+                    </div>
+                    
+                    <!-- Input Angka DP -->
+                    <input 
+                        type="text" 
+                        id="input-dp" 
+                        placeholder="0" 
+                        oninput="formatInputDP(this); calculateTotal();" 
+                        class="border-b border-gray-300 focus:outline-none focus:border-blue-900 text-right w-28 px-1 py-0.5 text-sm">
+                    
                 </div>
                 <div class="flex justify-between items-center font-bold text-lg text-red-600 border-t pt-2">
                     <span>SISA Rp.</span>
