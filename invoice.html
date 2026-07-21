@@ -7,35 +7,66 @@
     <!-- Library Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="assets/javascript.js"></script>  
-    <style> 
+    <script src="assets/javascript.js"></script>
+    <style>
+        /* ==========================================
+           STYLE STANDAR LAYAR (A4 PREVIEW)
+        ========================================== */
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 20px auto;
+            padding: 15mm;
+            background: #ffffff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            box-sizing: border-box;
+        }
+    
+        /* ==========================================
+           STYLE KHUSUS PRINT / SAVE TO PDF
+        ========================================== */
         @media print {
-            body { background: white; color: black; }
-            .no-print { display: none !important; }
-            .print-card { border: none; box-shadow: none; padding: 0; }
-             
-            /* Trik jitu buat ngilangin tanda panah select option pas di-pdf/print */
-            select {
-                -webkit-appearance: none;
-                -moz-appearance: none;
-                appearance: none;
-                background: transparent;
-                text-align-last: center; /* Tetap di tengah */
+            @page {
+                size: A4 portrait;
+                margin: 0; /* Margin dipindah ke padding container biar presisi */
             }
+    
+            html, body {
+                width: 210mm !important;
+                height: 297mm !important;
+                background: #ffffff !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+    
+            .a4-page {
+                width: 210mm !important;
+                margin: 0 !important;
+                padding: 15mm 12mm 15mm 12mm !important; /* Margin Atas 15mm, Kanan/Kiri 12mm */
+                box-shadow: none !important;
+                border: none !important;
+            }
+    
+            /* Hilangkan elemen yang tidak perlu diprint */
             .no-print {
                 display: none !important;
             }
-            
-            /* Matikan semua efek hover/pointer dari browser saat cetak */
-            * {
-                pointer-events: none !important;
+    
+            /* Sembunyikan tanda panah dropdown/select */
+            select {
+                -webkit-appearance: none !important;
+                -moz-appearance: none !important;
+                appearance: none !important;
+                background: transparent !important;
             }
         }
     </style>
 </head>
 <body class="bg-gray-100 font-sans p-6 text-gray-800">
 
-    <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md print-card">
+    <div class="a4-page max-w-[210mm] mx-auto bg-white p-8 shadow-lg border border-gray-100 rounded-sm my-6">
         
         <!-- HEADER NOTA -->
         <div class="border-b-2 border-blue-900 pb-2 mb-6">
@@ -51,29 +82,30 @@
                             <p class="text-xs font-semibold tracking-wider text-gray-600">Interior Decoration</p>
                         </div>
                     </div>
-                    <p class="text-xs text-gray-500 mt-2 max-w-xs">
-                        <p class="mb-2 font-medium text-gray-600">
+                    <div class="mt-2 space-y-1 text-gray-600">
+                        <!-- Daftar Produk / Layanan (Font Dikecilkan & Rapi) -->
+                        <p class="text-[12px] font-medium leading-tight text-gray-500 mb-2 max-w-sm">
                             Karpet ~ Wallpaper ~ Vinil ~ Blind ~ SPC ~ WPC ~ Gordyn ~ Sofa ~ Kaca Film
                         </p>
                     
                         <!-- Alamat + Icon Pin Location -->
-                        <div class="flex items- gap-2">
-                            <i class="fa-solid fa-location-dot text-gray-400 mt-0.5 text-sm w-4 text-center"></i>
+                        <div class="flex items-start gap-1.5 text-[13px]">
+                            <i class="fa-solid fa-location-dot text-gray-400 mt-0.5 text-[13px] w-3.5 text-center"></i>
                             <span>Metland Cileungsi Blok AA 17/26 Bogor 16820</span>
                         </div>
                     
                         <!-- Email + Icon Envelope -->
-                        <div class="flex items-center gap-2">
-                            <i class="fa-solid fa-envelope text-gray-400 text-sm w-4 text-center"></i>
+                        <div class="flex items-center gap-1.5 text-[13px]">
+                            <i class="fa-solid fa-envelope text-gray-400 text-[13px] w-3.5 text-center"></i>
                             <span>mitraindahinterior@gmail.com</span>
                         </div>
                     
                         <!-- No HP / Whatsapp + Icon Phone -->
-                        <div class="flex items-center gap-2">
-                            <i class="fa-solid fa-phone text-gray-400 text-sm w-4 text-center"></i>
+                        <div class="flex items-center gap-1.5 text-[13px]">
+                            <i class="fa-solid fa-phone text-gray-400 text-[13px] w-3.5 text-center"></i>
                             <span>0817 388 196 | 0811 878 7196</span>
                         </div>
-                    </p>    
+                    </div>   
                 </div>
 
                 <div class="flex justify-end">
