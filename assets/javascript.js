@@ -51,7 +51,7 @@ function cetakPDF() {
 }
 
 // Fungsi Tambah Baris
-function addRow() {
+function addRowInvoice() {
     const tbody = document.getElementById('item-rows');
     const newRow = document.createElement('tr');
     newRow.className = "border-b border-gray-200 item-row";
@@ -76,8 +76,44 @@ function addRow() {
             <input type="text" value="0" oninput="formatInputRupiah(this); calculateTotal();" class="price w-full text-right bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm">
         </td>
         <td class="p-2 text-right font-medium text-sm pr-4 row-total">Rp 0</td>
+        <td>
+            <button onclick="removeRow(this)" class="btn-remove-row text-red-500 hover:text-red-700 font-bold px-2 no-print">✕</button>
+        </td>
     `;
     tbody.appendChild(newRow);
+    calculateTotal();
+}
+
+function addRowPenawaran() {
+    const itemList = document.getElementById('item-list');
+    const rowCount = itemList.querySelectorAll('.item-row').length + 1;
+
+    const newRow = document.createElement('div');
+    newRow.className = 'item-row flex items-center gap-2 group';
+    newRow.innerHTML = `
+        <span class="row-num w-6 text-right">${rowCount}.</span>
+        <input type="text" class="item-name flex-1 border-b border-gray-200 focus:outline-none focus:border-blue-900 p-1" placeholder="Nama barang...">
+        <span class="text-gray-500">:</span>
+        <input type="number" oninput="calculateTotalPenawaran()" class="qty w-16 text-center border-b border-gray-200 focus:outline-none focus:border-blue-900 p-1" value="1">
+        <select class="w-full bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm text-center focus:outline-none">
+            <option value="pcs">Pcs</option>
+            <option value="m&sup2">m&sup2;</option>
+            <option value="meter">Mtr</option>
+            <option value="roll">Roll</option>
+            <option value="Box">Box</option>
+            <option value="set">Set</option>
+        </select>
+        <span class="text-gray-500">x</span>
+        <span class="text-gray-600 font-medium">Rp</span>
+        <input type="text" oninput="formatInputPrice(this); calculateTotalPenawaran()" class="price w-28 text-right border-b border-gray-200 focus:outline-none focus:border-blue-900 p-1" placeholder="0">
+        <span class="text-gray-500">=</span>
+        
+        <!-- HAPUS 'Rp' MANUALL DI SINI, BIARKAN JS YANG ISI SERTA 'Rp'-NYA -->
+        <span class="row-total w-32 text-right font-semibold p-1">Rp 0</span>
+        <button onclick="removeRow(this)" class="btn-remove-row text-red-500 hover:text-red-700 font-bold px-2 no-print">✕</button>
+    `;
+
+    itemList.appendChild(newRow);
     calculateTotal();
 }
 
@@ -85,6 +121,11 @@ function addRow() {
 function formatRupiah(angka) {
     return 'Rp ' + Math.round(angka).toLocaleString('id-ID');
 }
+
+// Format angka Rupiah standar (contoh: 2030000 -> 2.030.000)
+        // function formatRupiah(number) {
+        //     return new Intl.NumberFormat('id-ID').format(number);
+        // }
 
 // Helper untuk format otomatis saat ketik di input DP
 function formatInputRupiah(input) {
@@ -107,7 +148,57 @@ function deleteLastRow() {
     }
 }
 
-// FUNGSI UTAMA HITUNG TOTAL & DISKON
+// Hapus baris barang
+function removeRow(btn) {
+    const rows = document.querySelectorAll('.item-row');
+    if (rows.length > 1) {
+        btn.closest('.item-row').remove();
+        calculateTotal();
+    } else {
+        alert('Minimal harus ada 1 baris penawaran barang!');
+    }
+}
+
+// Hitung total per baris dan grand total
+// Hitung total per baris dan grand total
+function calculateTotalPenawaran() {
+    let grandTotal = 0;
+    const rows = document.querySelectorAll('.item-row');
+
+    rows.forEach((row, index) => {
+        // Update nomor urut otomatis
+        row.querySelector('.row-num').innerText = `${index + 1}.`;
+
+        // Ambil nilai Qty
+        const qtyInput = row.querySelector('.qty').value;
+        const qty = parseFloat(qtyInput) || 0;
+
+        // Ambil nilai Harga (hapus titik)
+        const priceRaw = row.querySelector('.price').value.replace(/[^0-9]/g, '') || "0";
+        const price = parseFloat(priceRaw) || 0;
+
+        // Hitung Total Baris Ini
+        const rowTotal = qty * price;
+        grandTotal += rowTotal;
+
+        // Tampilkan Total Baris
+        row.querySelector('.row-total').innerText = formatRupiah(rowTotal);
+    });
+
+    // Tampilkan Grand Total
+    document.getElementById('grand-total').innerText = formatRupiah(grandTotal);
+}
+
+// Format input harga saat diketik agar punya titik ribuan
+function formatInputPrice(input) {
+    let val = input.value.replace(/[^0-9]/g, '');
+    if (val) {
+        input.value = parseInt(val, 10).toLocaleString('id-ID');
+    } else {
+        input.value = '';
+    }
+}
+
 // FUNGSI UTAMA HITUNG TOTAL, DISKON & DP
 function calculateTotal() {
     let grandTotal = 0;
@@ -200,6 +291,15 @@ function handleDiscountTypeChange() {
     calculateTotal();
 }
 
+function formatInputPrice(input) {
+    let val = input.value.replace(/[^0-9]/g, '');
+    if (val) {
+        input.value = parseInt(val, 10).toLocaleString('id-ID');
+    } else {
+        input.value = '';
+    }
+}
+
 function formatInputDP(input) {
     const dpType = document.getElementById('dp-type')?.value || 'nominal';
     let val = input.value.replace(/[^0-9]/g, '');
@@ -210,3 +310,10 @@ function formatInputDP(input) {
         input.value = val; // Jika %, biarkan angka murni tanpa titik ribuan
     }
 }
+
+
+// Jalankan kalkulasi pertama kali saat halaman dimuat
+document.addEventListener('DOMContentLoaded', () => {
+    calculateTotal();
+    calculateTotalPenawaran();
+});

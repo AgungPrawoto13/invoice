@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surat Penawaran Harga - Mitra Indah</title>
+    <!-- Library Font Awesome 6 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="assets/javascript.js"></script>  
+    <style>
+        .font-brand {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        /* Custom style untuk cetakan PDF/Kertas */
+        @media print {
+            body {
+                background-color: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .page-container {
+                box-shadow: none !important;
+                border: none !important;
+                padding: 0 !important;
+                width: 100% !important;
+            }
+            input, textarea {
+                border: none !important;
+                background: transparent !important;
+                resize: none !important;
+            }
+            /* Sembunyikan tombol hapus saat print */
+            .btn-remove-row {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col items-center min-h-screen py-8 text-gray-800">
+
+    <!-- LEMBAR SURAT PENAWARAN (Ukuran A4) -->
+    <div class="page-container bg-white w-[21cm] min-h-[29.7cm] p-10 shadow-lg border border-gray-200 flex flex-col justify-between">
+        
+        <div>
+            <!-- 1. KOP SURAT MITRA INDAH -->
+            <header class="w-full">
+                <div class="flex items-center justify-between pb-2">
+                    <!-- Logo Perusahaan -->
+                    <div class="w-24 h-24 flex-shrink-0 flex items-center justify-center">
+                        <img src="img/logo.png" alt="Logo Mitra Indah" class="w-full h-full object-contain" onError="this.onerror=null; this.src='https://via.placeholder.com/100x100?text=LOGO';">
+                    </div>
+            
+                    <!-- Detail Kop Surat -->
+                    <div class="flex-1 text-center px-4 text-[#1e3a8a]">
+                        <!-- Judul Utama -->
+                        <h1 class="text-2xl font-black tracking-wide" style="-webkit-text-stroke: 0.5px currentColor; paint-order: stroke fill;">
+                            Mitra Indah
+                        </h1>
+                        <h2 class="font-bold text-sm tracking-normal -mt-0.5">
+                            Interior Decoration
+                        </h2>
+            
+                        <!-- Daftar Produk / Layanan -->
+                        <p class="text-[11px] font-medium text-gray-600 mt-1 mb-1.5">
+                            Karpet ~ Wallpaper ~ Vinil ~ Blind ~ SPC ~ WPC ~ Gordyn ~ Sofa ~ Kaca Film
+                        </p>
+            
+                        <!-- Container Kontak Rata Kiri & Berada di Tengah Halaman -->
+                        <div class="inline-block text-left text-[11px] text-gray-700 space-y-0.5">
+                            <!-- Alamat -->
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-location-dot text-[#1e3a8a] w-4 text-center"></i>
+                                <span>Metland Cileungsi Blok AA 17/26 Bogor 16820</span>
+                            </div>
+            
+                            <!-- Email -->
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-envelope text-[#1e3a8a] w-4 text-center"></i>
+                                <span>mitraindahinterior@gmail.com</span>
+                            </div>
+            
+                            <!-- No Telp / HP -->
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-phone text-[#1e3a8a] w-4 text-center"></i>
+                                <span>0817 388 196 / 0811 878 7196</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Garis Ganda Kop Surat -->
+                <div class="w-full mt-1">
+                    <div class="border-t-2 border-[#1e3a8a] w-full"></div>
+                    <div class="border-t border-[#1e3a8a] w-full mt-[2px]"></div>
+                </div>
+            </header>
+
+            <!-- 2. TANGGAL SURAT -->
+            <div class="text-right mt-6 text-sm">
+                <span class="text-xs text-gray-500 w-24 text-left">Jakarta, </span>
+                <input type="date" class="border-b border-gray-300 focus:outline-none text-xs px-1 py-0.5 bg-transparent appearance-none w-30">
+            </div>
+
+            <!-- 3. PENERIMA & SALAM -->
+            <div class="mt-4 text-sm space-y-1">
+                <p>Kepada Yth.</p>
+                <input type="text" class="font-bold w-full outline-none focus:bg-blue-50 p-1 rounded border-b border-gray-200">
+                <p class="pt-2">Dengan Hormat,</p>
+            </div>
+
+            <!-- 4. PARAGRAF PEMBUKA -->
+            <div class="mt-3 text-sm leading-relaxed">
+                <div class="flex items-center gap-1 flex-wrap">
+                    <span>Bersama ini kami dari <b>Mitra Indah Interior Decoration</b> ingin menawarkan</span>
+                    <input type="text" class="font-semibold border-b border-gray-300 focus:outline-none focus:border-blue-900 px-1 text-sm w-18">.
+                </div>
+                <p class="mt-1">Ada pun penawarannya tertera di bawah ini :</p>
+            </div>
+
+            <!-- 5. DAFTAR BARANG (LIST PENAWARAN HARGA) -->
+            <div class="mt-6">
+                <div id="item-list" class="space-y-2 text-sm">
+                    <!-- Baris Default 1 -->
+                    <div class="item-row flex items-center gap-2 group">
+                        <span class="row-num w-6 text-right">1.</span>
+                        <input type="text" class="item-name flex-1 border-b border-gray-200 focus:outline-none focus:border-blue-900 p-1" placeholder="Nama barang...">
+                        <span class="text-gray-500">:</span>
+                        <input type="number" oninput="calculateTotalPenawaran()" class="qty w-16 text-center border-b border-gray-200 focus:outline-none focus:border-blue-900 p-1" value="1">
+                        <select class="w-full bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm text-center focus:outline-none">
+                            <option value="pcs">Pcs</option>
+                            <option value="m&sup2">m&sup2;</option>
+                            <option value="meter">Mtr</option>
+                            <option value="roll">Roll</option>
+                            <option value="Box">Box</option>
+                            <option value="set">Set</option>
+                        </select>
+                        <span class="text-gray-500">x</span>
+                        <span class="text-gray-600 font-medium">Rp</span>
+                        <input type="text" oninput="formatInputPrice(this); calculateTotalPenawaran()" class="price w-28 text-right border-b border-gray-200 focus:outline-none focus:border-blue-900 p-1" placeholder="0">
+                        <span class="text-gray-500">=</span>
+                        
+                        <!-- HAPUS 'Rp' MANUALL DI SINI, BIARKAN JS YANG ISI SERTA 'Rp'-NYA -->
+                        <span class="row-total w-32 text-right font-semibold p-1">Rp 0</span>
+                        <button onclick="removeRow(this)" class="btn-remove-row text-red-500 hover:text-red-700 font-bold px-2 no-print">✕</button>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2 mb-6 no-print">
+                    <button onclick="addRowPenawaran()" class="bg-blue-900 hover:bg-blue-800 text-white text-xs font-semibold py-1.5 px-3 rounded shadow-sm transition">
+                        + Tambah Barang
+                    </button>
+                </div>
+
+                <!-- GRAND TOTAL -->
+                <div class="flex justify-end items-center gap-2 mt-4 text-sm font-bold border-t pt-3">
+                    <span class="tracking-wide">TOTAL =</span>
+                    <!-- HAPUS 'Rp' MANUALL DI SINI JUGA -->
+                    <span id="grand-total" class="w-32 text-right text-base">Rp 0</span>
+                    <span class="w-6 no-print"></span>
+                </div>
+            </div>
+
+            <!-- 6. CATATAN KHUSUS (NB) -->
+            <div class="mt-8 text-xs space-y-1">
+                <div class="flex items-center gap-1 font-bold">
+                    <span>NB : Harga belum termasuk ongkos tekuk.</span>
+                </div>
+                <div class="font-bold pt-1">
+                    <span class="w-full border-b border-transparent border-gray-300 focus:outline-none focus:border-blue-900 p-0.5">Pembayaran harap dilakukan transfer ke BCA 2101179623 A/n Edi Santoso.</span>
+                </div>
+            </div>
+
+            <!-- 7. PARAGRAF PENUTUP -->
+            <p class="mt-6 text-sm">
+                Demikian surat penawaran ini, atas perhatiannya kami ucapkan terima kasih.
+            </p>
+        </div>
+
+        <!-- 8. TANDA TANGAN (Hormat Kami) -->
+        <div class="flex justify-between items-end pt-4 text-center text-xs mt-4">
+            <!-- Bagian Kiri (Pemesanan) -->
+            <div class="flex flex-col justify-between h-40">
+            </div>
+
+            <!-- Bagian Kanan (Stempel & Nama) -->
+            <div class="flex flex-col justify-between items-center h-40">
+                <p>Hormat Kami</p>
+                
+                <!-- Wadah flex-1 untuk menampung gambar agar berada di tengah -->
+                <div class="flex flex-col items-center justify-center flex-1">
+                    <!-- Tinggi gambar di-set ke h-32, ukuran sedang yang pas -->
+                    <img 
+                        src="img/stampel.png" 
+                        alt="Logo Mitra Indah" 
+                        class="h-40 w-auto object-contain print:h-40" 
+                        style="pointer-events: none !important;">
+                </div>
+
+                <p class="font-semibold text-gray-750">Mitra Indah</p>
+            </div>
+        </div>
+        <!-- ACTION BUTTONS (Sembunyikan saat dicetak & ukurannya normal) -->
+        <div class="mt-8 flex justify-end no-print">
+            <button onclick="cetakPDF()" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded shadow transition text-sm">
+                Cetak / Simpan PDF
+            </button>
+        </div>
+
+    </div>
+</body>
+</html>

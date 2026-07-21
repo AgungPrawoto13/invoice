@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generator Nota Pesanan - Mitra Indah</title>
+    <title>Invoice - Mitra Indah</title>
+    <!-- Library Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="assets/javascript.js"></script> 
-    <style>
+    <script src="assets/javascript.js"></script>  
+    <style> 
         @media print {
             body { background: white; color: black; }
             .no-print { display: none !important; }
@@ -50,10 +52,27 @@
                         </div>
                     </div>
                     <p class="text-xs text-gray-500 mt-2 max-w-xs">
-                        Karpet ~ Wallpaper ~ Vinil ~Blind ~ SPC ~ WPC ~ Gordyn ~ Sofa ~ Kaca Film<br>
-                        Alamat : Metland Cileungsi Blok AA 17/26 Bogor 16820<br>
-                        Email: mitraindahinterior@gmail.com<br>
-                        Telp: Hp: 0817 388 196 | 0811 878 7196<br>
+                        <p class="mb-2 font-medium text-gray-600">
+                            Karpet ~ Wallpaper ~ Vinil ~ Blind ~ SPC ~ WPC ~ Gordyn ~ Sofa ~ Kaca Film
+                        </p>
+                    
+                        <!-- Alamat + Icon Pin Location -->
+                        <div class="flex items- gap-2">
+                            <i class="fa-solid fa-location-dot text-gray-400 mt-0.5 text-sm w-4 text-center"></i>
+                            <span>Metland Cileungsi Blok AA 17/26 Bogor 16820</span>
+                        </div>
+                    
+                        <!-- Email + Icon Envelope -->
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-envelope text-gray-400 text-sm w-4 text-center"></i>
+                            <span>mitraindahinterior@gmail.com</span>
+                        </div>
+                    
+                        <!-- No HP / Whatsapp + Icon Phone -->
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-phone text-gray-400 text-sm w-4 text-center"></i>
+                            <span>0817 388 196 | 0811 878 7196</span>
+                        </div>
                     </p>    
                 </div>
 
@@ -83,7 +102,7 @@
 
                         <!-- Baris 3: Di, Nama Perusahaan -->
                         <div class="flex items-center">
-                            <span class="text-xs text-gray-500 w-24 text-left">Di Tempat:</span>
+                            <span class="text-xs text-gray-500 w-24 text-left">Di:</span>
                             <!-- Ubah w-44 menjadi w-60 -->
                             <input type="text" placeholder="PT. / Nama Perusahaan" class="border-b border-gray-300 focus:outline-none focus:border-blue-900 px-1 py-0.5 text-sm w-60">
                         </div>
@@ -107,6 +126,7 @@
                     <th class="py-2 px-3">Nama Barang</th>
                     <th class="py-2 px-3 w-36 text-right">Harga Satuan</th>
                     <th class="py-2 px-3 w-36 text-right">Jumlah</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody id="item-rows">
@@ -131,14 +151,19 @@
                     <td class="p-2">
                         <input type="text" value="0" oninput="formatInputRupiah(this); calculateTotal();" class="price w-full text-right bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm">
                     </td>
-                    <td class="p-2 text-right font-medium text-sm pr-4 row-total">Rp 0</td>
+                    <td class="p-2 text-right font-medium text-sm pr-4 row-total">
+                        Rp 0
+                    </td>
+                    <td>
+                        <button onclick="removeRow(this)" class="btn-remove-row text-red-500 hover:text-red-700 font-bold px-2 no-print">✕</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
 
         <!-- BUTTON TAMBAH BARIS -->
         <div class="flex items-center space-x-2 mb-6 no-print">
-            <button onclick="addRow()" class="bg-blue-900 hover:bg-blue-800 text-white text-xs font-semibold py-1.5 px-3 rounded shadow-sm transition">
+            <button onclick="addRowInvoice()" class="bg-blue-900 hover:bg-blue-800 text-white text-xs font-semibold py-1.5 px-3 rounded shadow-sm transition">
                 + Tambah Barang
             </button>
             <button onclick="deleteLastRow()" class="bg-red-900 hover:bg-red-800 text-white text-xs font-semibold py-1.5 px-3 rounded shadow-sm transition">
