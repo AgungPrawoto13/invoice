@@ -17,6 +17,13 @@
 
         /* Custom style untuk cetakan PDF/Kertas */
         @media print {
+            .row-total, #grand-total {
+                white-space: nowrap !important;
+                word-break: keep-all !important;
+            }
+            .item-row input {
+                border-bottom: none !important;
+            }
             body {
                 background-color: white !important;
                 padding: 0 !important;
@@ -147,7 +154,9 @@
                         <span class="text-gray-500">=</span>
                         
                         <!-- HAPUS 'Rp' MANUALL DI SINI, BIARKAN JS YANG ISI SERTA 'Rp'-NYA -->
-                        <span class="row-total w-32 text-right font-semibold p-1">Rp 0</span>
+                        <span class="row-total font-bold text-right p-1" style="width: 120px !important; flex-shrink: 0 !important; white-space: nowrap !important; display: inline-block !important;">
+                            Rp 0
+                        </span>
                         <button onclick="removeRow(this)" class="btn-remove-row text-red-500 hover:text-red-700 font-bold px-2 no-print">✕</button>
                     </div>
                 </div>
@@ -169,10 +178,11 @@
             <!-- 6. CATATAN KHUSUS (NB) -->
             <div class="mt-8 text-xs space-y-1">
                 <div class="flex items-center gap-1 font-bold">
-                    <span>NB : Harga belum termasuk ongkos tekuk.</span>
+                    <span>NB : Untuk pemesanan disertakan DP <input type="text" class="item-name flex-1 border-b border-gray-200 border-transparent focus:outline-none focus:border-blue-900 p-1" placeholder="Berapa Persen Lek ?..."></span>
                 </div>
                 <div class="font-bold pt-1">
-                    <span class="w-full border-b border-transparent border-gray-300 focus:outline-none focus:border-blue-900 p-0.5">Pembayaran harap dilakukan transfer ke BCA 2101179623 A/n Edi Santoso.</span>
+                    <span class="w-full border-b border-transparent border-gray-300 focus:outline-none focus:border-blue-900 p-0.5">Sisanya setelah pekerjaan selesai  
+                        Pembayaran transfer ke bank BCA 2101179623 A/n Edi Santoso.</span>
                 </div>
             </div>
 
@@ -183,7 +193,7 @@
         </div>
 
         <!-- 8. TANDA TANGAN (Hormat Kami) -->
-        <div class="flex justify-between items-end pt-4 text-center text-xs mt-4">
+        <div class="flex justify-between items-end pt-4 text-center text-xs">
             <!-- Bagian Kiri (Pemesanan) -->
             <div class="flex flex-col justify-between h-40">
             </div>

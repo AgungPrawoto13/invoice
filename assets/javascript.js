@@ -109,7 +109,9 @@ function addRowPenawaran() {
         <span class="text-gray-500">=</span>
         
         <!-- HAPUS 'Rp' MANUALL DI SINI, BIARKAN JS YANG ISI SERTA 'Rp'-NYA -->
-        <span class="row-total w-32 text-right font-semibold p-1">Rp 0</span>
+        <span class="row-total font-bold text-right p-1" style="width: 120px !important; flex-shrink: 0 !important; white-space: nowrap !important; display: inline-block !important;">
+            Rp 0
+        </span>
         <button onclick="removeRow(this)" class="btn-remove-row text-red-500 hover:text-red-700 font-bold px-2 no-print">✕</button>
     `;
 
