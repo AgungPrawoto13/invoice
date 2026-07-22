@@ -70,7 +70,13 @@ function addRowInvoice() {
             </select>
         </td>
         <td class="p-2">
-            <input type="text" placeholder="Nama barang..." class="w-full bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm">
+            <textarea 
+                rows="1" 
+                placeholder="Nama barang..." 
+                oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"
+                class="w-full bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm resize-none overflow-hidden block leading-normal"
+                style="min-height: 28px; max-height: 120px; vertical-align: middle; width: 100%; box-sizing: border-box;"
+            ></textarea>
         </td>
         <td class="p-2">
             <input type="text" value="0" oninput="formatInputRupiah(this); calculateTotal();" class="price w-full text-right bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm">
@@ -91,11 +97,17 @@ function addRowPenawaran() {
     const newRow = document.createElement('div');
     newRow.className = 'item-row flex items-center gap-2 group';
     newRow.innerHTML = `
-        <span class="row-num w-6 text-right">${rowCount}.</span>
-        <input type="text" class="item-name flex-1 border-b border-gray-200 focus:outline-none focus:border-blue-900 p-1" placeholder="Nama barang...">
+        <span class="row-num w-6 text-right">1.</span>
+        <textarea 
+            rows="1" 
+            placeholder="Nama barang..." 
+            oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"
+            class="border-b border-gray-200 focus:outline-none focus:border-blue-900 p-1 text-sm resize-none overflow-hidden block leading-normal"
+            style="flex: 1 1 0% !important; width: 100% !important; min-width: 150px !important; min-height: 28px; max-height: 120px; box-sizing: border-box;"
+        ></textarea>
         <span class="text-gray-500">:</span>
-        <input type="number" oninput="calculateTotalPenawaran()" class="qty w-16 text-center border-b border-gray-200 focus:outline-none focus:border-blue-900 p-1" value="1">
-        <select class="w-full bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm text-center focus:outline-none">
+        <input type="number" oninput="calculateTotalPenawaran()" class="qty w-12 text-center border-b border-gray-200 focus:outline-none focus:border-blue-900 p-1" value="1">
+        <select class="w-16 bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm text-center focus:outline-none">
             <option value="pcs">Pcs</option>
             <option value="m&sup2">m&sup2;</option>
             <option value="meter">Mtr</option>
@@ -105,7 +117,7 @@ function addRowPenawaran() {
         </select>
         <span class="text-gray-500">x</span>
         <span class="text-gray-600 font-medium">Rp</span>
-        <input type="text" oninput="formatInputPrice(this); calculateTotalPenawaran()" class="price w-28 text-right border-b border-gray-200 focus:outline-none focus:border-blue-900 p-1" placeholder="0">
+        <input type="text" oninput="formatInputPrice(this); calculateTotalPenawaran()" class="price w-20 text-right border-b border-gray-200 focus:outline-none focus:border-blue-900 p-1" placeholder="0">
         <span class="text-gray-500">=</span>
         
         <!-- HAPUS 'Rp' MANUALL DI SINI, BIARKAN JS YANG ISI SERTA 'Rp'-NYA -->

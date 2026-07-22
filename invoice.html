@@ -179,7 +179,13 @@
                         </select>
                     </td>
                     <td class="p-2">
-                        <input type="text" placeholder="Nama barang..." class="w-full bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm">
+                        <textarea 
+                            rows="1" 
+                            placeholder="Nama barang..." 
+                            oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"
+                            class="w-full bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm resize-none overflow-hidden block leading-normal"
+                            style="min-height: 28px; max-height: 120px; vertical-align: middle; width: 100%; box-sizing: border-box;"
+                        ></textarea>
                     </td>
                     <td class="p-2">
                         <input type="text" value="0" oninput="formatInputRupiah(this); calculateTotal();" class="price w-full text-right bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm">
@@ -308,6 +314,12 @@
 
         <!-- ACTION BUTTONS (Sembunyikan saat dicetak & ukurannya normal) -->
         <div class="mt-8 flex justify-end no-print">
+            <a href="kwitansi.html"  class="bg-orange-600 hover:bg-orange-700 text-white font-medium py-2 px-6 rounded shadow transition text-sm">
+                Buat Kwitansi
+            </a>
+            <a href="penawaran-harga.html" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded shadow transition text-sm">
+                Buat Penawaran Harga
+            </a>
             <button onclick="cetakPDF()" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded shadow transition text-sm">
                 Cetak / Simpan PDF
             </button>
