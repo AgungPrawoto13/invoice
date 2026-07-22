@@ -24,49 +24,45 @@
 
         @media print {
             @page {
-                margin: 0;
-                size: auto;
+                size: A4 portrait;
+                margin: 1cm !important; /* Memberi margin A4 standar biar gak mepet/mendorong elemen */
             }
+            
             body { 
                 background: transparent !important;
                 margin: 0 !important;
                 padding: 0 !important;
             }
-            .no-print { display: none !important; }
+            
+            .no-print { 
+                display: none !important; 
+            }
             
             .print-card { 
                 border: none !important;
                 box-shadow: none !important;
-                padding: 2.5rem !important;
+                padding: 0 !important; /* DIBUAT 0 AGAR TIDAK MEMBENGKAKKAN HALAMAN */
                 margin: 0 !important;
                 width: 100% !important;
+                height: auto !important; /* PAKSA TINGGI FLEKSIBEL SESUAI KONTEN */
             }
 
-            /* MEMAKSA STRUKTUR FORM SEJAJAR SAAT DICETAK (TIDAK TURUN KE BAWAH) */
-            .row-kwitansi {
-                display: flex !important;
-                flex-direction: row !important;
-                align-items: center !important;
-            }
-            .row-kwitansi-start {
-                display: flex !important;
-                flex-direction: row !important;
+            /* KUNCI KHUSUS AREA HORMAT KAMI AGAR TERAANGKAT NAIK */
+            .flex.justify-between.items-end,
+            .signature-section {
+                margin-top: 20px !important; /* Spasi dari teks 'Demikian surat penawaran...' cukup 20px saja */
+                margin-bottom: 0 !important;
+                padding-top: 0 !important;
                 align-items: flex-start !important;
             }
-            .label-kwitansi {
-                width: 13rem !important; /* 48 dalam skala tailwind */
-                flex-shrink: 0 !important;
-            }
-            .titik-dua {
-                display: inline-block !important;
-                margin-right: 0.75rem !important;
-                font-weight: bold !important;
-            }
 
-            /* MENGUNCI KOTAK NOMINAL RUPIAH AGAR TIDAK MELAR PAS DIPRINT */
-            .box-nominal {
-                width: 16rem !important; /* Mengunci lebar kotak bintik rupiah */
-                flex-shrink: 0 !important;
+            /* KECILKAN SEDIKIT UKURAN STEMPEL SAAT DIPRINT AGAR TIDAK MAKAN TEMPAT */
+            img[src*="stampel"], 
+            img[src*="stempel"],
+            .signature-section img {
+                height: 80px !important; /* Disederhanakan lebarnya agar tidak memicu scroll/dorongan */
+                width: auto !important;
+                object-fit: contain !important;
             }
         }
     </style>
@@ -202,7 +198,8 @@
                     <input type="date" id="tanggal-kwitansi" class="border-b border-gray-300 bg-transparent focus:outline-none text-sm w-32 py-0.5">
                 </div>
                 
-                <!-- Spasi Tempat Tanda Tangan (Sesuai Kebutuhan) -->
+                <!-- 
+                Spasi Tempat Tanda Tangan (Sesuai Kebutuhan) -->
                 <div class="flex justify-between items-end pt-4 text-center text-xs">
                     <!-- Bagian Kiri (Pemesanan) -->
                     <div class="flex flex-col justify-between h-40">
