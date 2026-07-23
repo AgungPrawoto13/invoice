@@ -9,40 +9,54 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Mengunci warna & gambar saat dicetak */
+        /* Mengunci warna saat dicetak */
         body, html, * { 
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
         }
 
-        /* Ukuran Standar Kartu Nama Indonesia (9 cm x 5.5 cm) */
+        /* UKURAN UTAMA KARTU NAMA (9 cm x 5.5 cm) */
         .business-card {
             width: 9cm;
             height: 5.5cm;
             box-sizing: border-box;
         }
 
+        /* TAMPILAN DI LAYAR MONITOR (Diperbesar 1.6x biar enak dilihat) */
+        @media screen {
+            .business-card {
+                transform: scale(1.6);
+                transform-origin: center center;
+            }
+        }
+
+        /* TAMPILAN SAAT DICETAK / SIMPAN KE PDF */
         @media print {
             @page {
-                size: A4;
-                margin: 1cm;
+                /* KUNCI UKURAN KERTAS PDF TEPAT SESUAI KARTU NAMA */
+                size: 9cm 5.5cm;
+                margin: 0 !important;
             }
-            body { 
+            
+            html, body {
+                width: 9cm !important;
+                height: 5.5cm !important;
                 background: white !important;
                 padding: 0 !important;
                 margin: 0 !important;
-                display: flex;
-                justify-content: flex-start;
-                align-items: flex-start;
+                overflow: hidden !important;
             }
+
             .no-print { 
                 display: none !important; 
             }
+
             .business-card {
-                border: 1px dashed #ccc !important; /* Garis bantu potong saat cetak */
+                width: 100% !important;
+                height: 100% !important;
+                border: none !important;
                 box-shadow: none !important;
-                page-break-inside: avoid !important;
-                break-inside: avoid !important;
+                transform: scale(1) !important; /* Pas 100% mengisi PDF */
             }
         }
     </style>
@@ -123,8 +137,8 @@
     </div>
 
     <!-- TOMBOL CETAK & NAVIGASI (HANYA MUNCUL DI LAYAR WEBSITE) -->
-    <div class="mt-6 flex gap-3 no-print">
-        <a href="index.html" class="bg-gray-700 hover:bg-gray-800 text-white font-medium py-2 px-4 rounded text-xs shadow transition">
+    <div class="mt-24 flex gap-3 no-print">
+        <a href="penawaran-harga.html" class="bg-gray-700 hover:bg-gray-800 text-white font-medium py-2 px-4 rounded text-xs shadow transition">
             <i class="fa-solid fa-arrow-left mr-1"></i> Kembali
         </a>
         <button onclick="window.print()" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-5 rounded text-xs shadow transition flex items-center gap-1.5">
