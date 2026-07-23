@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kartu Nama - Mitra Indah Interior</title>
+    <!-- Library Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Mengunci warna & gambar saat dicetak */
+        body, html, * { 
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        /* Ukuran Standar Kartu Nama Indonesia (9 cm x 5.5 cm) */
+        .business-card {
+            width: 9cm;
+            height: 5.5cm;
+            box-sizing: border-box;
+        }
+
+        @media print {
+            @page {
+                size: A4;
+                margin: 1cm;
+            }
+            body { 
+                background: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                display: flex;
+                justify-content: flex-start;
+                align-items: flex-start;
+            }
+            .no-print { 
+                display: none !important; 
+            }
+            .business-card {
+                border: 1px dashed #ccc !important; /* Garis bantu potong saat cetak */
+                box-shadow: none !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-200 min-h-screen flex flex-col items-center justify-center p-4 text-gray-900 font-sans">
+
+    <!-- CONTAINER KARTU NAMA -->
+    <div class="business-card bg-white p-3.5 shadow-xl border border-gray-300 relative flex flex-col justify-between overflow-hidden rounded-sm">
+        
+        <!-- 1. KOP / HEADER KARTU NAMA -->
+        <div class="w-full">
+            <div class="flex items-center gap-2">
+                <!-- Logo Perusahaan -->
+                <div class="w-8 h-8 flex-shrink-0 flex items-center justify-center">
+                    <img src="img/logo.png" alt="Logo" class="w-full h-full object-contain" onError="this.onerror=null; this.src='https://via.placeholder.com/40x40?text=MI';">
+                </div>
+                <!-- Nama Perusahaan -->
+                <h1 class="text-lg font-black text-[#0275d8] tracking-tight leading-none" style="font-family: Arial, sans-serif;">
+                    Mitra Indah Interior
+                </h1>
+            </div>
+            <!-- Garis Biru Underline -->
+            <div class="border-b-2 border-[#0275d8] w-full mt-1"></div>
+        </div>
+
+        <!-- 2. KONTEN UTAMA (DUA KOLOM: KIRI MENGERJAKAN, KANAN NAMA & KONTAK) -->
+        <div class="flex justify-between items-start mt-1.5 flex-1 w-full">
+            
+            <!-- Kolom Kiri: Mengerjakan -->
+            <div class="w-[35%] text-[8.5px] leading-[1.15] font-bold text-gray-900">
+                <p class="underline font-black mb-0.5 text-[9px]">Mengerjakan :</p>
+                <ul class="space-y-[4px]">
+                    <li>-Wallpaper</li>
+                    <li>-Karpet</li>
+                    <li>-Vinil</li>
+                    <li>-Spc/Wpc</li>
+                    <li>-Parquet</li>
+                    <li>-Blind</li>
+                    <li>-Gordyn</li>
+                    <li>-Kaca film</li>
+                    <li>-Sofa</li>
+                </ul>
+            </div>
+
+            <!-- Kolom Kanan: Nama & Detail Alamat/Kontak (DIUBAH justify-start agar nempel ke atas) -->
+            <div class="w-[62%] flex flex-col justify-start items-end h-full text-right">
+                
+                <!-- Nama Pemilik -->
+                <div class="mt-0.5">
+                    <h2 class="text-[13px] font-black tracking-wider text-gray-900 uppercase" style="font-family: 'Times New Roman', Times, serif;">
+                        EDI SANTOSO
+                    </h2>
+                </div>
+
+                <!-- Detail Alamat & Kontak (DIBERIKAN mt-2 AGAR PAS DI BAWAH NAMA) -->
+                <div class="text-[7.5px] leading-tight text-gray-900 font-semibold space-y-0.5 mt-2">
+                    <p>Metland Cileungsi Blok AA 17/26 Bogor 16820</p>
+                    
+                    <!-- Nomor Telepon / WA -->
+                    <div class="pt-0.5 space-y-[1px]">
+                        <div class="flex items-center justify-end gap-1">
+                            <i class="fa-brands fa-whatsapp text-green-600 text-[9px]"></i>
+                            <span>0817 388 196</span>
+                        </div>
+                        <p>0811 878 7196</p>
+                    </div>
+
+                    <!-- Email -->
+                    <p class="pt-0.5 text-[7px] font-bold">
+                        Email: mitraindahinterior@gmail.com
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- TOMBOL CETAK & NAVIGASI (HANYA MUNCUL DI LAYAR WEBSITE) -->
+    <div class="mt-6 flex gap-3 no-print">
+        <a href="index.html" class="bg-gray-700 hover:bg-gray-800 text-white font-medium py-2 px-4 rounded text-xs shadow transition">
+            <i class="fa-solid fa-arrow-left mr-1"></i> Kembali
+        </a>
+        <button onclick="window.print()" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-5 rounded text-xs shadow transition flex items-center gap-1.5">
+            <i class="fa-solid fa-print"></i> Cetak Kartu Nama
+        </button>
+    </div>
+
+</body>
+</html>
