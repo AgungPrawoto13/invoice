@@ -67,6 +67,9 @@ function addRowInvoice() {
                 <option value="roll">Roll</option>
                 <option value="Box">Box</option>
                 <option value="set">Set</option>
+                <option value="roll">Btg</option>
+                <option value="Box">Lbr</option>
+                <option value="set">Trap</option>
             </select>
         </td>
         <td class="p-2">
@@ -114,6 +117,9 @@ function addRowPenawaran() {
             <option value="roll">Roll</option>
             <option value="Box">Box</option>
             <option value="set">Set</option>
+            <option value="roll">Btg</option>
+            <option value="Box">Lbr</option>
+            <option value="set">Trap</option>
         </select>
         <span class="text-gray-500">x</span>
         <span class="text-gray-600 font-medium">Rp</span>
