@@ -156,8 +156,13 @@
             <!-- 4. PARAGRAF PEMBUKA -->
             <div class="mt-3 text-sm leading-relaxed">
                 <div class="flex items-center gap-1 flex-wrap">
-                    <span>Bersama ini kami dari <b>Mitra Indah Interior Decoration</b> ingin menawarkan</span>
-                    <input type="text" class="font-semibold border-b border-gray-300 focus:outline-none focus:border-blue-900 px-1 text-sm w-18">.
+                    <textarea 
+                        rows="1" 
+                        placeholder="Buat Penawaran Harga..." 
+                        oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"
+                        class="w-full bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm resize-none overflow-hidden block leading-normal"
+                        style="min-height: 28px; max-height: 120px; vertical-align: middle; width: 100%; box-sizing: border-box;"
+                    ></textarea>
                 </div>
                 <p class="mt-1">Ada pun penawarannya tertera di bawah ini :</p>
             </div>
