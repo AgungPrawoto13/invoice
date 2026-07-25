@@ -242,9 +242,11 @@
                 </div>
 
                 <!-- Input Diskon % / Nominal -->
-                <div class="flex justify-between items-center py-1">
+                <div class="grid grid-cols-[159px_60px_1fr] items-center py-1">
                     <div class="flex items-center space-x-1">
                         <span class="font-medium text-gray-700">Discount</span>
+                    </div>
+                    <div class="flex items-center space-x-1">
                         <select id="discount-type" onchange="handleDiscountTypeChange()" class="print:hidden border border-gray-300 rounded text-xs px-1 py-0.5 focus:outline-none focus:border-blue-900 bg-white">
                             <option value="percent">%</option>
                             <option value="nominal">Rp</option>
@@ -253,21 +255,21 @@
                         <span class="font-medium text-gray-700">:</span>
                     </div>
                     
-                    <!-- Wadah Kanan Diskon (Agar rata kanan & sejajar) -->
-                    <div class="flex justify-end items-center w-40">
-                        <input 
-                            type="text" 
-                            id="discount" 
-                            placeholder="0" 
-                            oninput="formatInputDP(this); calculateTotal();" 
-                            class="border-b border-gray-300 focus:outline-none border-transparent focus:border-blue-900 text-right w-36 px-1 py-0.5 text-sm bg-transparent">
-                    </div>
+                    <!-- Input Diskon (Tanpa div w-44/w-40, langsung w-full pr-0) -->
+                    <input 
+                        type="text" 
+                        id="discount" 
+                        placeholder="0" 
+                        oninput="formatInputDP(this); calculateTotal();" 
+                        class="border-b border-gray-300 focus:outline-none border-transparent focus:border-blue-900 text-right w-full py-0.5 pr-0 bg-transparent text-sm">
                 </div>
 
                 <!-- Input DP -->
-                <div class="flex justify-between items-center py-1">
+                <div class="grid grid-cols-[159px_60px_1fr] items-center py-1">
                     <div class="flex items-center space-x-1">
                         <span class="font-medium text-gray-700">DP</span>
+                    </div>
+                    <div class="flex items-center space-x-1">
                         <select id="dp-type" onchange="handleDpTypeChange()" class="print:hidden border border-gray-300 rounded text-xs px-1 py-0.5 focus:outline-none focus:border-blue-900 bg-white">
                             <option value="nominal">Rp</option>
                             <option value="percent">%</option>
@@ -276,15 +278,13 @@
                         <span class="font-medium text-gray-700">:</span>
                     </div>
                     
-                    <!-- Wadah Kanan DP (Agar rata kanan & sejajar) -->
-                    <div class="flex justify-end items-center w-40">
-                        <input 
-                            type="text" 
-                            id="input-dp" 
-                            placeholder="0" 
-                            oninput="formatInputDP(this); calculateTotal();" 
-                            class="border-b border-gray-300 focus:outline-none border-transparent focus:border-blue-900 text-right w-36 px-1 py-0.5 text-sm bg-transparent">
-                    </div>
+                    <!-- Input DP (Tanpa div w-40, langsung w-full pr-0) -->
+                    <input 
+                        type="text" 
+                        id="input-dp" 
+                        placeholder="0" 
+                        oninput="formatInputDP(this); calculateTotal();" 
+                        class="border-b border-gray-300 focus:outline-none border-transparent focus:border-blue-900 text-right w-full py-0.5 pr-0 bg-transparent text-sm">
                 </div>
 
                 <!-- SISA TOTAL -->
