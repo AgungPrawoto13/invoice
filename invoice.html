@@ -89,21 +89,21 @@
                             Gordyn ~ Sofa ~ Kaca Film
                         </p>
                     
-                        <!-- Alamat + Icon Pin Location -->
+                        <!-- Alamat + Icon Pin Location (BIRU) -->
                         <div class="flex items-start gap-1.5 text-[13px]">
-                            <i class="fa-solid fa-location-dot text-gray-400 mt-0.5 text-[13px] w-3.5 text-center"></i>
+                            <i class="fa-solid fa-location-dot text-blue-600 mt-0.5 text-[13px] w-3.5 text-center"></i>
                             <span>Metland Cileungsi Blok AA 17/26 Bogor 16820</span>
                         </div>
-                    
-                        <!-- Email + Icon Envelope -->
+
+                        <!-- Email + Icon Envelope (MERAH) -->
                         <div class="flex items-center gap-1.5 text-[13px]">
-                            <i class="fa-solid fa-envelope text-gray-400 text-[13px] w-3.5 text-center"></i>
+                            <i class="fa-solid fa-envelope text-blue-600 text-[13px] w-3.5 text-center"></i>
                             <span>mitraindahinterior@gmail.com</span>
                         </div>
-                    
-                        <!-- No HP / Whatsapp + Icon Phone -->
+
+                        <!-- No HP / Whatsapp + Icon Phone (HIJAU WA) -->
                         <div class="flex items-center gap-1.5 text-[13px]">
-                            <i class="fa-solid fa-phone text-gray-400 text-[13px] w-3.5 text-center"></i>
+                            <i class="fa-solid fa-phone text-blue-600 text-[13px] w-3.5 text-center"></i>
                             <span>0817 388 196 | 0811 878 7196</span>
                         </div>
                     </div>   
@@ -114,7 +114,7 @@
                         
                         <!-- Baris 1: Jakarta, Tanggal -->
                         <div class="flex items-center">
-                            <span class="text-xs text-gray-500 w-24 text-left">Jakarta,</span>
+                            <span class="text-xs text-gray-500 w-24 text-left">Bogor,</span>
                             <input type="date" class="border-b border-gray-300 focus:outline-none text-xs px-1 py-0.5 bg-transparent appearance-none w-60">
                         </div>
 
@@ -233,16 +233,15 @@
             <!-- Perhitungan Uang -->
             <div class="space-y-2 text-sm">
                 <!-- JUMLAH TOTAL -->
-                <div class="flex justify-between items-center font-semibold text-blue-950">
-                    <span>JUMLAH</span>
-                    <div class="flex justify-between items-center w-44">
-                        <span class="text-gray-800 font-normal">Rp</span>
-                        <span id="total-jumlah" class="font-bold text-right">0</span>
-                    </div>
+                <div class="flex items-center font-semibold text-blue-950 pl-20">
+                    <span class="w-[76px]">JUMLAH</span>
+                    <span class="w-[60px]">Rp</span>
+                    <!-- Tambahkan pr-6 (padding-right) di sini -->
+                    <span id="total-jumlah" class="flex-1 text-right font-bold pr-10">0</span>
                 </div>
 
                 <!-- Input Diskon % / Nominal -->
-                <div class="grid grid-cols-[159px_60px_1fr] items-center py-1">
+                <div class="grid grid-cols-[69px_60px_1fr] items-center py-1 pl-20">
                     <div class="flex items-center space-x-1">
                         <span class="font-medium text-gray-700">Discount</span>
                     </div>
@@ -261,11 +260,11 @@
                         id="discount" 
                         placeholder="0" 
                         oninput="formatInputDP(this); calculateTotal();" 
-                        class="border-b border-gray-300 focus:outline-none border-transparent focus:border-blue-900 text-right w-full py-0.5 pr-0 bg-transparent text-sm">
+                        class="pr-10 border-b border-gray-300 focus:outline-none border-transparent focus:border-blue-900 text-right w-full py-0.5 pr-0 bg-transparent text-sm">
                 </div>
 
                 <!-- Input DP -->
-                <div class="grid grid-cols-[159px_60px_1fr] items-center py-1">
+                <div class="grid grid-cols-[69px_60px_1fr] items-center py-1 pl-20">
                     <div class="flex items-center space-x-1">
                         <span class="font-medium text-gray-700">DP</span>
                     </div>
@@ -284,16 +283,14 @@
                         id="input-dp" 
                         placeholder="0" 
                         oninput="formatInputDP(this); calculateTotal();" 
-                        class="border-b border-gray-300 focus:outline-none border-transparent focus:border-blue-900 text-right w-full py-0.5 pr-0 bg-transparent text-sm">
+                        class="border-b pr-10 border-gray-300 focus:outline-none border-transparent focus:border-blue-900 text-right w-full py-0.5 pr-0 bg-transparent text-sm">
                 </div>
 
                 <!-- SISA TOTAL -->
-                <div class="flex justify-between items-center font-bold text-lg text-red-600 border-t pt-2">
-                    <span>SISA</span>
-                    <div class="flex justify-between items-center w-44">
-                        <span class="font-normal text-red-600">Rp</span>
-                        <span id="total-sisa" class="text-right">0</span>
-                    </div>
+                <div class="flex justify-between items-center font-bold text-lg text-red-600 border-t pt-2 pl-20">
+                    <span class="w-[76px]">SISA</span>
+                    <span class="w-[60px]">Rp</span>
+                    <span id="total-sisa" class="flex-1 text-right font-bold pr-10">0</span>
                 </div>
             </div>
         </div>
