@@ -18,7 +18,7 @@
         /* UKURAN UTAMA KARTU NAMA (9 cm x 5.5 cm) */
         .business-card {
             width: 9cm;
-            height: 5.5cm;
+            height: 6cm; 
             box-sizing: border-box;
         }
 
@@ -34,7 +34,7 @@
         @media print {
             @page {
                 /* KUNCI UKURAN KERTAS PDF TEPAT SESUAI KARTU NAMA */
-                size: 9cm 5.5cm;
+                size: 9cm 5.7cm;
                 margin: 0 !important;
             }
             
@@ -74,9 +74,12 @@
                     <img src="img/logo.png" alt="Logo" class="w-full h-full object-contain" onError="this.onerror=null; this.src='https://via.placeholder.com/40x40?text=MI';">
                 </div>
                 <!-- Nama Perusahaan -->
-                <h1 class="text-lg font-black text-[#0275d8] tracking-tight leading-none" style="font-family: Arial, sans-serif;">
-                    Mitra Indah Interior
-                </h1>
+                <div>
+                    <h1 class="text-[17px] font-black tracking-wide text-[#1e40af]" style="-webkit-text-stroke: 1px currentColor; paint-order: stroke fill;">
+                        Mitra Indah
+                    </h1>
+                    <p class="text-[8px] font-semibold tracking-wider text-gray-600">Interior Decoration</p>
+                </div>
             </div>
             <!-- Garis Biru Underline -->
             <div class="border-b-2 border-[#0275d8] w-full mt-1"></div>
@@ -87,7 +90,7 @@
             
             <!-- Kolom Kiri: Mengerjakan -->
             <div class="w-[35%] text-[8.5px] leading-[1.15] font-bold text-gray-900">
-                <p class="underline font-black mb-0.5 text-[9px]">Mengerjakan :</p>
+                <p class="underline font-black mb-0.5 text-[9px]">Mengerjakan :</p><br>
                 <ul class="space-y-[4px]">
                     <li>-Wallpaper</li>
                     <li>-Karpet</li>
@@ -101,39 +104,36 @@
                 </ul>
             </div>
 
-            <!-- Kolom Kanan: Nama & Detail Alamat/Kontak (DIUBAH justify-start agar nempel ke atas) -->
-            <div class="w-[62%] flex flex-col justify-start items-end h-full text-right">
+            <!-- Kolom Kanan: Nama & Detail Alamat/Kontak -->
+            <div class="w-[62%] flex flex-col justify-between items-end h-full text-right">
                 
-                <!-- Nama Pemilik -->
-                <div class="mt-0.5">
+                <!-- Nama Pemilik (Tetap Rapat ke Atas) -->
+                <div class="mt-[30px]">
                     <h2 class="text-[13px] font-black tracking-wider text-gray-900 uppercase" style="font-family: 'Times New Roman', Times, serif;">
                         EDI SANTOSO
                     </h2>
                 </div>
 
-                <!-- Detail Alamat & Kontak (DIBERIKAN mt-2 AGAR PAS DI BAWAH NAMA) -->
-                <div class="text-[7.5px] leading-tight text-gray-900 font-semibold space-y-0.5 mt-2">
-                    <p>Metland Cileungsi Blok AA 17/26 Bogor 16820</p>
+                <!-- Detail Alamat & Kontak (Diberi mt-auto Agar Terdorong Otomatis ke Bawah) -->
+                <div class="text-[7.5px] leading-tight text-gray-900 font-semibold space-y-0.5 mt-auto">
+                    <p class="pt-0.5 text-[9px] font-bold">Metland Cileungsi Blok AA 17/26 <br> Bogor 16820</p>
                     
                     <!-- Nomor Telepon / WA -->
                     <div class="pt-0.5 space-y-[1px]">
                         <div class="flex items-center justify-end gap-1">
                             <i class="fa-brands fa-whatsapp text-green-600 text-[9px]"></i>
-                            <span>0817 388 196</span>
+                            <p class="pt-0.5 text-[9px] font-bold">0817 388 196</p>
                         </div>
-                        <p>0811 878 7196</p>
+                        <p class="pt-0.5 text-[9px] font-bold">0811 878 7196</p>
                     </div>
 
                     <!-- Email -->
-                    <p class="pt-0.5 text-[7px] font-bold">
+                    <p class="pt-0.5 text-[9px] font-bold">
                         Email: mitraindahinterior@gmail.com
                     </p>
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
     <!-- TOMBOL CETAK & NAVIGASI (HANYA MUNCUL DI LAYAR WEBSITE) -->
