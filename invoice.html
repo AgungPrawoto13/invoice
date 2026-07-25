@@ -115,14 +115,12 @@
                         <!-- Baris 1: Jakarta, Tanggal -->
                         <div class="flex items-center">
                             <span class="text-xs text-gray-500 w-24 text-left">Jakarta,</span>
-                            <!-- Ubah w-44 menjadi w-60 -->
                             <input type="date" class="border-b border-gray-300 focus:outline-none text-xs px-1 py-0.5 bg-transparent appearance-none w-60">
                         </div>
 
                         <!-- Baris 2: Kepada Yth, Nama-Nama -->
                         <div class="flex items-start">
                             <span class="text-xs text-gray-500 w-24 text-left pt-1">Kepada Yth :</span>
-                            <!-- Ubah w-44 menjadi w-60 -->
                             <textarea 
                                 id="kepada-yth"
                                 rows="1" 
@@ -136,7 +134,6 @@
                         <!-- Baris 3: Di, Nama Perusahaan -->
                         <div class="flex items-center">
                             <span class="text-xs text-gray-500 w-24 text-left">Di:</span>
-                            <!-- Ubah w-44 menjadi w-60 -->
                             <input type="text" placeholder="PT. / Nama Perusahaan" class="border-b border-gray-300 focus:outline-none focus:border-blue-900 px-1 py-0.5 text-sm w-60">
                         </div>
 
@@ -158,8 +155,8 @@
                     <th class="py-2 px-3 w-20">Satuan</th>
                     <th class="py-2 px-3">Nama Barang</th>
                     <th class="py-2 px-3 w-36 text-right">Harga Satuan</th>
-                    <th class="py-2 px-3 w-36 text-left">Jumlah</th>
-                    <th></th>
+                    <th class="py-2 px-3 w-40 text-right">Jumlah</th>
+                    <th class="w-8"></th>
                 </tr>
             </thead>
             <tbody id="item-rows">
@@ -193,13 +190,16 @@
                     <td class="p-2">
                         <input type="text" value="0" oninput="formatInputRupiah(this); calculateTotal();" class="price w-full text-right bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm">
                     </td>
-                    <td class="p-2 font-medium text-sm w-40">
-                        <div class="flex justify-between items-center w-full px-1">
-                            <!-- Class row-total dipasang KHUSUS di angka saja -->
+                    
+                    <!-- KANAN: FLEXBOX DIPISAH AGAR RP KUNCI SEJAJAR -->
+                    <td class="p-2 font-medium text-sm">
+                        <div class="flex justify-between items-center w-36 ml-auto">
+                            <span class="text-gray-800 font-normal">Rp</span>
                             <span class="row-total font-bold text-right">0</span>
                         </div>
                     </td>
-                    <td>
+                    
+                    <td class="text-center">
                         <button onclick="removeRow(this)" class="btn-remove-row text-red-500 hover:text-red-700 font-bold px-2 no-print">✕</button>
                     </td>
                 </tr>
@@ -232,60 +232,68 @@
 
             <!-- Perhitungan Uang -->
             <div class="space-y-2 text-sm">
+                <!-- JUMLAH TOTAL -->
                 <div class="flex justify-between items-center font-semibold text-blue-950">
-                    <span>JUMLAH Rp.</span>
-                    <span id="total-jumlah" class="font-bold">Rp 0</span>
+                    <span>JUMLAH</span>
+                    <div class="flex justify-between items-center w-44">
+                        <span class="text-gray-800 font-normal">Rp</span>
+                        <span id="total-jumlah" class="font-bold text-right">0</span>
+                    </div>
                 </div>
 
-                <!-- Input Diskon % -->
+                <!-- Input Diskon % / Nominal -->
                 <div class="flex justify-between items-center py-1">
                     <div class="flex items-center space-x-1">
                         <span class="font-medium text-gray-700">Discount</span>
-                        <!-- Toggle Pilihan Tipe Diskon (Otomatis Hilang Saat Print) -->
                         <select id="discount-type" onchange="handleDiscountTypeChange()" class="print:hidden border border-gray-300 rounded text-xs px-1 py-0.5 focus:outline-none focus:border-blue-900 bg-white">
                             <option value="percent">%</option>
                             <option value="nominal">Rp</option>
                         </select>
-                        <!-- Teks Keterangan Tipe Diskon Saat Diprint / Simpan PDF -->
                         <span id="discount-label-print" class="hidden print:inline font-medium text-gray-700">%</span>
                         <span class="font-medium text-gray-700">:</span>
                     </div>
                     
-                    <!-- Input Angka Diskon -->
-                    <input 
-                        type="text" 
-                        id="discount" 
-                        placeholder="0" 
-                        oninput="formatInputDP(this); calculateTotal();" 
-                        class="border-b border-gray-300 border border-transparent focus:outline-none focus:border-blue-900 text-right w-28 px-1 py-0.5 text-sm">
+                    <!-- Wadah Kanan Diskon (Agar rata kanan & sejajar) -->
+                    <div class="flex justify-end items-center w-40">
+                        <input 
+                            type="text" 
+                            id="discount" 
+                            placeholder="0" 
+                            oninput="formatInputDP(this); calculateTotal();" 
+                            class="border-b border-gray-300 focus:outline-none border-transparent focus:border-blue-900 text-right w-36 px-1 py-0.5 text-sm bg-transparent">
+                    </div>
                 </div>
 
                 <!-- Input DP -->
                 <div class="flex justify-between items-center py-1">
                     <div class="flex items-center space-x-1">
                         <span class="font-medium text-gray-700">DP</span>
-                        <!-- Dropdown Tipe DP -->
                         <select id="dp-type" onchange="handleDpTypeChange()" class="print:hidden border border-gray-300 rounded text-xs px-1 py-0.5 focus:outline-none focus:border-blue-900 bg-white">
                             <option value="nominal">Rp</option>
                             <option value="percent">%</option>
                         </select>
-                        <!-- Label saat dicetak PDF -->
                         <span id="dp-label-print" class="hidden print:inline font-medium text-gray-700">(Rp)</span>
                         <span class="font-medium text-gray-700">:</span>
                     </div>
                     
-                    <!-- Input Angka DP -->
-                    <input 
-                        type="text" 
-                        id="input-dp" 
-                        placeholder="0" 
-                        oninput="formatInputDP(this); calculateTotal();" 
-                        class="border-b border-gray-300 border border-transparent focus:outline-none focus:border-blue-900 text-right w-28 px-1 py-0.5 text-sm">
-                    
+                    <!-- Wadah Kanan DP (Agar rata kanan & sejajar) -->
+                    <div class="flex justify-end items-center w-40">
+                        <input 
+                            type="text" 
+                            id="input-dp" 
+                            placeholder="0" 
+                            oninput="formatInputDP(this); calculateTotal();" 
+                            class="border-b border-gray-300 focus:outline-none border-transparent focus:border-blue-900 text-right w-36 px-1 py-0.5 text-sm bg-transparent">
+                    </div>
                 </div>
+
+                <!-- SISA TOTAL -->
                 <div class="flex justify-between items-center font-bold text-lg text-red-600 border-t pt-2">
-                    <span>SISA Rp.</span>
-                    <span id="total-sisa">Rp 0</span>
+                    <span>SISA</span>
+                    <div class="flex justify-between items-center w-44">
+                        <span class="font-normal text-red-600">Rp</span>
+                        <span id="total-sisa" class="text-right">0</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -301,9 +309,7 @@
             <div class="flex flex-col justify-between items-center h-40">
                 <p>Hormat Kami</p>
                 
-                <!-- Wadah flex-1 untuk menampung gambar agar berada di tengah -->
                 <div class="flex flex-col items-center justify-center flex-1">
-                    <!-- Tinggi gambar di-set ke h-32, ukuran sedang yang pas -->
                     <img 
                         src="img/stampel.png" 
                         alt="Logo Mitra Indah" 
@@ -315,15 +321,15 @@
             </div>
         </div>
 
-        <!-- ACTION BUTTONS (Sembunyikan saat dicetak & ukurannya normal) -->
+        <!-- ACTION BUTTONS -->
         <div class="mt-8 flex justify-end no-print">
-            <a href="kwitansi.html"  class="bg-orange-600 hover:bg-orange-700 text-white font-medium py-2 px-6 rounded shadow transition text-sm">
+            <a href="kwitansi.html" class="bg-orange-600 hover:bg-orange-700 text-white font-medium py-2 px-6 rounded shadow transition text-sm mr-2">
                 Buat Kwitansi
             </a>
-            <a href="penawaran-harga.html" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded shadow transition text-sm">
+            <a href="penawaran-harga.html" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded shadow transition text-sm mr-2">
                 Buat Penawaran Harga
             </a>
-            <button onclick="cetakPDF()" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded shadow transition text-sm">
+            <button onclick="window.print()" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded shadow transition text-sm">
                 Cetak / Simpan PDF
             </button>
         </div>

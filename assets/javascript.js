@@ -60,7 +60,7 @@ function addRowInvoice() {
             <input type="number" value="1" min="1" oninput="calculateTotal()" class="qty w-full text-center bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm">
         </td>
         <td class="p-2 text-center">
-            <select class="w-full bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm text-center focus:outline-none appearance-none">
+            <select class="w-full bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm text-center focus:outline-none">
                 <option value="pcs">Pcs</option>
                 <option value="m&sup2">m&sup2;</option>
                 <option value="meter">Mtr</option>
@@ -84,12 +84,16 @@ function addRowInvoice() {
         <td class="p-2">
             <input type="text" value="0" oninput="formatInputRupiah(this); calculateTotal();" class="price w-full text-right bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm">
         </td>
-        <td class="p-2 font-medium text-sm w-40">
-            <div class="flex justify-between items-center w-full px-1">
-                <!-- Class row-total dipasang KHUSUS di angka saja -->
+        
+        <!-- KANAN: FLEXBOX DIPISAH AGAR RP KUNCI SEJAJAR -->
+        <td class="p-2 font-medium text-sm">
+            <div class="flex justify-between items-center w-36 ml-auto">
+                <span class="text-gray-800 font-normal">Rp</span>
                 <span class="row-total font-bold text-right">0</span>
             </div>
         </td>
+        
+        <td class="text-center">
             <button onclick="removeRow(this)" class="btn-remove-row text-red-500 hover:text-red-700 font-bold px-2 no-print">✕</button>
         </td>
     `;
@@ -144,7 +148,7 @@ function addRowPenawaran() {
 
 // Helper mengubah angka jadi format tampilan "Rp 800.000"
 function formatRupiah(angka) {
-    return 'Rp ' + Math.round(angka).toLocaleString('id-ID');
+    return Math.round(angka).toLocaleString('id-ID');
 }
 
 // Format angka Rupiah standar (contoh: 2030000 -> 2.030.000)
