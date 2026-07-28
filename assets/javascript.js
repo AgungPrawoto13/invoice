@@ -88,7 +88,6 @@ function addRowInvoice() {
         <!-- KANAN: FLEXBOX DIPISAH AGAR RP KUNCI SEJAJAR -->
         <td class="p-2 font-medium text-sm">
             <div class="flex justify-between items-center w-36 ml-auto">
-                <span class="text-gray-800 font-normal">Rp</span>
                 <span class="row-total font-bold text-right">0</span>
             </div>
         </td>
@@ -117,7 +116,7 @@ function addRowPenawaran() {
             style="flex: 1 1 0% !important; width: 100% !important; min-width: 150px !important; min-height: 28px; max-height: 120px; box-sizing: border-box;"
         ></textarea>
         <span class="text-gray-500">:</span>
-        <input type="number" oninput="calculateTotalPenawaran()" class="qty w-12 text-center border-b border-gray-200 focus:outline-none focus:border-blue-900 p-1" value="1">
+        <input type="number" oninput="calculateTotalPenawaran()" class="qty w-16 text-center border-b border-gray-200 focus:outline-none focus:border-blue-900 p-1" value="1">
         <select class="w-16 bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm text-center focus:outline-none">
             <option value="pcs">Pcs</option>
             <option value="m&sup2">m&sup2;</option>
