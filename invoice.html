@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="assets/javascript.js"></script>
+    <script src="assets/invoice.js"></script>
     <style>
         /* ==========================================
            STYLE STANDAR LAYAR (A4 PREVIEW)
@@ -326,7 +327,7 @@
             <a href="penawaran-harga.html" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded shadow transition text-sm mr-2">
                 Buat Penawaran Harga
             </a>
-            <button onclick="window.print()" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded shadow transition text-sm">
+            <button onclick="saveInvoice(); window.print();" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded shadow transition text-sm">
                 Cetak / Simpan PDF
             </button>
         </div>

@@ -354,7 +354,6 @@ function formatInputDP(input) {
     }
 }
 
-
 // Jalankan kalkulasi pertama kali saat halaman dimuat
 document.addEventListener('DOMContentLoaded', () => {
     calculateTotal();
