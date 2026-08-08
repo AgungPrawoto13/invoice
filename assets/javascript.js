@@ -203,7 +203,6 @@ function updateRowNumbers() {
 }
 
 // Hitung total per baris dan grand total
-// Hitung total per baris dan grand total
 function calculateTotalPenawaran() {
     let grandTotal = 0;
     const rows = document.querySelectorAll('.item-row');
