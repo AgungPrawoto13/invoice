@@ -1,12 +1,14 @@
 import os
 import psycopg2
 import json
+from datetime import datetime
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
 from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
 
 load_dotenv()
+date_now = datetime.now()
 
 app = Flask(__name__)
 CORS(app)
@@ -49,9 +51,6 @@ def get_db_connection():
 def save_invoice():
     data = request.json
 
-    with open("data-invoice.json", "w") as file:
-        json.dump(data, file, indent=4)
-
     if not data:
         return jsonify({"error": "No data provided"}), 400
     
@@ -66,7 +65,7 @@ def save_invoice():
         query_invoice = """
             INSERT INTO invoices (
                 invoice_date, customer_name, customer_address,
-                subtotal, discount_value, dp_value, grand_total
+                discount_value, dp_value, grand_total, created_at
             ) VALUES (%s, %s, %s, %s, %s, %s, %s)
             RETURNING id;
         """
@@ -74,10 +73,10 @@ def save_invoice():
             data.get("invoice_date"),
             data.get("customer_name"),
             data.get("customer_address"),
-            data.get("subtotal"),
-            data.get("discount_value"),
-            data.get("dp_value"),
-            data.get("grand_total")
+            data.get("discount"),
+            data.get("dp"),
+            data.get("total_amount"),
+            date_now  # Menyimpan waktu saat ini sebagai created_at
         )
 
         cursor.execute(query_invoice, val_invoice)
