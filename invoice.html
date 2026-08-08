@@ -134,7 +134,7 @@
                         <!-- Baris 3: Di, Nama Perusahaan -->
                         <div class="flex items-center">
                             <span class="text-xs text-gray-500 w-24 text-left">Di:</span>
-                            <input type="text" placeholder="PT. / Nama Perusahaan" class="border-b border-gray-300 focus:outline-none focus:border-blue-900 px-1 py-0.5 text-sm w-60">
+                            <input type="text" id="address" placeholder="PT. / Nama Perusahaan" class="border-b border-gray-300 focus:outline-none focus:border-blue-900 px-1 py-0.5 text-sm w-60">
                         </div>
 
                     </div>
@@ -163,10 +163,10 @@
                 <!-- Baris Pertama -->
                 <tr class="border-b border-gray-200 item-row">
                     <td class="p-2 text-center">
-                        <input type="number" value="1" min="1" oninput="calculateTotal()" class="qty w-full text-center bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm">
+                        <input type="number" id="qty" value="1" min="1" oninput="calculateTotal()" class="qty w-full text-center bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm">
                     </td>
                     <td class="p-2 text-center">
-                        <select class="w-full bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm text-center focus:outline-none">
+                        <select id="unit" class="w-full bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm text-center focus:outline-none">
                             <option value="pcs">Pcs</option>
                             <option value="m&sup2">m&sup2;</option>
                             <option value="meter">Mtr</option>
@@ -182,19 +182,20 @@
                         <textarea 
                             rows="1" 
                             placeholder="Nama barang..." 
+                            id="goods"
                             oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"
                             class="w-full bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm resize-none overflow-hidden block leading-normal"
                             style="min-height: 28px; max-height: 120px; vertical-align: middle; width: 100%; box-sizing: border-box;"
                         ></textarea>
                     </td>
                     <td class="p-2">
-                        <input type="text" value="0" oninput="formatInputRupiah(this); calculateTotal();" class="price w-full text-right bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm">
+                        <input type="text" id="unit-price" value="0" oninput="formatInputRupiah(this); calculateTotal();" class="price w-full text-right bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm">
                     </td>
                     
                     <!-- KANAN: FLEXBOX DIPISAH AGAR RP KUNCI SEJAJAR -->
                     <td class="p-2 font-medium text-sm">
-                        <div class="flex justify-between items-center w-36 ml-auto">
-                            <span class="row-total font-bold text-right">0</span>
+                        <div class="flex justify-between items-left w-36 ml-auto">
+                            <span id="amount" class="row-total font-bold text-left">0</span>
                         </div>
                     </td>
                     
