@@ -86,10 +86,8 @@ function addRowInvoice() {
         </td>
         
         <!-- KANAN: FLEXBOX DIPISAH AGAR RP KUNCI SEJAJAR -->
-        <td class="p-2 font-medium text-sm">
-            <div class="flex justify-between items-center w-36 ml-auto">
-                <span class="row-total font-bold text-right">0</span>
-            </div>
+        <td class="p-2 font-medium text-right">
+            <span class="row-total font-bold text-right">0</span>
         </td>
         
         <td class="text-center">
