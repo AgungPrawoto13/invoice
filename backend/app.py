@@ -1,5 +1,6 @@
 import os
 import psycopg2
+import json
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
@@ -47,15 +48,21 @@ def get_db_connection():
 @app.route('/api/save-invoice', methods=['POST'])
 def save_invoice():
     data = request.json
+
+    with open("data-invoice.json", "w") as file:
+        json.dump(data, file, indent=4)
+
     if not data:
         return jsonify({"error": "No data provided"}), 400
     
     conn = None
     cursor = None
+
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
 
+        # 1. Simpan Data Invoice Utama
         query_invoice = """
             INSERT INTO invoices (
                 invoice_date, customer_name, customer_address,
@@ -75,15 +82,18 @@ def save_invoice():
 
         cursor.execute(query_invoice, val_invoice)
         invoice_id = cursor.fetchone()[0]
+        
+        # Ambil array items dari JSON
         items = data.get("items", [])
 
-        query_item = """
+        # 2. Simpan ke Tabel invoices_items
+        query_invoices_items = """
             INSERT INTO invoices_items (
                 invoice_id, item_name, qty, unit, unit_price, total_price
             ) VALUES (%s, %s, %s, %s, %s, %s)
         """
 
-        val_items = [
+        val_invoices_items = [
             (
                 invoice_id,
                 item.get('item_name'),
@@ -95,9 +105,31 @@ def save_invoice():
             for item in items
         ]
 
-        if val_items:
-            cursor.executemany(query_item, val_items)
-        
+        if val_invoices_items:
+            cursor.executemany(query_invoices_items, val_invoices_items)
+
+        # 3. Simpan ke Tabel items (List per-item dari array items)
+        query_items = """ 
+            INSERT INTO items (
+                qty, item_name, unit, unit_price, total_price, invoice_id 
+            ) VALUES (%s, %s, %s, %s, %s, %s)
+        """ 
+
+        val_items = [
+            (
+                item.get('qty'),
+                item.get('item_name'),
+                item.get('unit'),
+                item.get('unit_price'),
+                item.get('total_price'),
+                invoice_id  
+            )
+            for item in items
+        ]
+
+        if val_items:    
+            cursor.executemany(query_items, val_items)
+
         conn.commit()
 
         return jsonify({

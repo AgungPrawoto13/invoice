@@ -2,12 +2,9 @@ async function saveInvoice(){
     const invoiceData = {
         customer_name: document.getElementById('kepada-yth')?.value || '',
         customer_address: document.getElementById('address')?.value || '',
-        qty: document.getElementById('qty')?.value || 1,
-        unit: document.getElementById('unit')?.value || '',
-        goods_name: document.getElementById('goods')?.value || '',
-        unit_price: document.getElementById('unit-price')?.value || 0,
-        amount: document.getElementById('amount')?.textContent || 0,
-        total_amount: document.getElementById('total-jumlah')?.value || 0,
+        total_amount: parseInt(
+            (document.getElementById('total-jumlah')?.innerText || '0').replace(/[^0-9]/g, ''), 10
+        ) || 0,
         discount: document.getElementById('discount')?.value || 0,
         dp: document.getElementById('input-dp')?.value || 0,
         items: []
@@ -18,15 +15,16 @@ async function saveInvoice(){
         const qty = parseFloat(row.querySelector('.qty').value) || 0;
         const unit = row.querySelector('select')?.value;
         const itemName = row.querySelector('textarea').value;
-        const priceStr = row.querySelector('.price').value.replace(/[^0-9.]/g, '');
-        const unitPrice = parseFloat(priceStr) || 0;
+        const priceStr = row.querySelector('.price').value.replace(/[^0-9]/g, '');
+        const unitPrice = parseInt(priceStr, 10) || 0;
+        const amount = row.querySelector('amount')?.value || 0;
         const totalPrice = qty * unitPrice;
 
         if (itemName.trim() !== '') {
             invoiceData.items.push({
-                item_name: itemName,
                 qty: qty,
                 unit: unit,
+                item_name: itemName,
                 unit_price: unitPrice,
                 total_price: totalPrice 
             });
