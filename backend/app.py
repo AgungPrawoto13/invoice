@@ -110,18 +110,17 @@ def save_invoice():
         # 3. Simpan ke Tabel items (List per-item dari array items)
         query_items = """ 
             INSERT INTO items (
-                qty, item_name, unit, unit_price, total_price, invoice_id 
-            ) VALUES (%s, %s, %s, %s, %s, %s)
+                item_name, unit, unit_price, invoice_id, created_at
+            ) VALUES (%s, %s, %s, %s, %s)
         """ 
 
         val_items = [
             (
-                item.get('qty'),
                 item.get('item_name'),
                 item.get('unit'),
                 item.get('unit_price'),
-                item.get('total_price'),
-                invoice_id  
+                invoice_id,
+                date_now  # Menyimpan waktu saat ini sebagai created_at
             )
             for item in items
         ]
