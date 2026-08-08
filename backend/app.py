@@ -3,6 +3,7 @@ import psycopg2
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
+from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
 
 load_dotenv()
 
@@ -11,9 +12,37 @@ CORS(app)
 db_url = os.getenv("URL_DB")
 
 def get_db_connection():
+    db_url = os.getenv('DATABASE_URL')
     if not db_url:
-        raise ValueError("Database URL is not set in the environment variables.")
-    return psycopg2.connect(db_url)
+        raise ValueError("DATABASE_URL tidak ditemukan di file .env!")
+    
+    parsed_url = urlparse(db_url)
+    query_params = parse_qs(parsed_url.query)
+    
+    # 1. Hapus channel_binding yang bikin crash sebelumnya
+    if 'channel_binding' in query_params:
+        del query_params['channel_binding']
+        
+    # 2. Ambil Endpoint ID dari hostname (misal: ep-cool-flower-123456.neon.tech)
+    hostname_parts = parsed_url.hostname.split('.')
+    endpoint_id = hostname_parts[0]  # Ambil bagian depan (ep-xxx)
+    
+    # 3. Suntikkan parameter options=endpoint=ep-xxx jika belum ada
+    if endpoint_id.startswith('ep-') and 'options' not in query_params:
+        query_params['options'] = f'endpoint={endpoint_id}'
+        
+    # Build ulang URL bersih
+    new_query = urlencode(query_params, doseq=True)
+    clean_url = urlunparse((
+        parsed_url.scheme,
+        parsed_url.netloc,
+        parsed_url.path,
+        parsed_url.params,
+        new_query,
+        parsed_url.fragment
+    ))
+    
+    return psycopg2.connect(clean_url)
 
 @app.route('/api/save-invoice', methods=['POST'])
 def save_invoice():
@@ -49,7 +78,7 @@ def save_invoice():
         items = data.get("items", [])
 
         query_item = """
-            INSERT INTO invoice_items (
+            INSERT INTO invoices_items (
                 invoice_id, item_name, qty, unit, unit_price, total_price
             ) VALUES (%s, %s, %s, %s, %s, %s)
         """
