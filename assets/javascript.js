@@ -209,7 +209,10 @@ function calculateTotalPenawaran() {
 
     rows.forEach((row, index) => {
         // Update nomor urut otomatis
-        row.querySelector('.row-num').innerText = `${index + 1}.`;
+        const rowNum = row.querySelector('.row-num');
+        if (rowNum) {
+            rowNum.innerText = `${index + 1}.`;
+        }
 
         // Ambil nilai Qty
         const qtyInput = row.querySelector('.qty').value;
@@ -228,7 +231,11 @@ function calculateTotalPenawaran() {
     });
 
     // Tampilkan Grand Total
-    document.getElementById('grand-total').innerText = formatRupiah(grandTotal);
+    const documentGrandTotal = document.getElementById('grand-total');
+    if (documentGrandTotal) {
+        documentGrandTotal.innerText = formatRupiah(grandTotal);
+    }
+    // document.getElementById('grand-total').innerText = formatRupiah(grandTotal);
 }
 
 // Format input harga saat diketik agar punya titik ribuan

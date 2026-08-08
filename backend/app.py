@@ -77,10 +77,17 @@ def save_invoice():
             'invoice_id': invoice_id
         }), 200
     
-    except Exception as e:
+    except Exception as err:
         if conn:
             conn.rollback()
-        return jsonify({"error": str(e), 'message': 'Failed to save invoice'}), 500
+
+        print("\n" + "="*50)
+        print("DETIL ERROR DATABASE / PYTHON:")
+        import traceback
+        traceback.print_exc()
+        print("="*50 + "\n")
+        
+        return jsonify({'status': 'error', 'message': str(err)}), 500
     
     finally:
         if cursor:
