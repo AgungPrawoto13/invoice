@@ -16,7 +16,7 @@
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
         }
-
+ 
         /* Pattern background bintik-bintik biru */
         .pattern-bg {
             background-image: radial-gradient(#3b82f6 1px, transparent 0);
@@ -155,13 +155,13 @@
 
             <!-- 4. PARAGRAF PEMBUKA -->
             <div class="mt-3 text-sm leading-relaxed">
-                <div class="flex items-center gap-1 flex-wrap">
+                <div class="flex items-center gap-1 flex-wrap w-full">
                     <textarea 
                         rows="1" 
                         placeholder="Buat Penawaran Harga..." 
-                        oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"
-                        class="w-full bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm resize-none overflow-hidden block leading-normal"
-                        style="min-height: 28px; max-height: 120px; vertical-align: middle; width: 100%; box-sizing: border-box;"
+                        oninput="this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';"
+                        class="w-full bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm resize-none block leading-normal"
+                        style="min-height: 28px; width: 100%; box-sizing: border-box; overflow: hidden;"
                     ></textarea>
                 </div>
             </div>
@@ -170,35 +170,34 @@
             <div class="mt-6">
                 <div id="item-list" class="space-y-2 text-sm">
                     <!-- Baris Default 1 -->
-                    <div class="item-row flex items-center gap-2 w-full" style="display: flex !important; align-items: center !important; width: 100% !important;">
+                    <div class="item-row flex items-center gap-2 w-full">
                         <span class="row-num w-6 text-right">1.</span>
+                        
                         <textarea 
                             rows="1" 
                             placeholder="Nama barang..." 
                             oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"
                             class="border-b border-gray-200 focus:outline-none focus:border-blue-900 p-1 text-sm resize-none overflow-hidden block leading-normal"
-                            style="flex: 1 1 0% !important; width: 100% !important; min-width: 150px !important; min-height: 28px; max-height: 120px; box-sizing: border-box;"
+                            style="flex: 1 1 0% !important; width: 100% !important; min-width: 150px !important;"
                         ></textarea>
-                        <span class="text-gray-500">:</span>
-                        <input type="number" oninput="calculateTotalPenawaran()" class="qty w-16 text-center border-b border-gray-200 focus:outline-none focus:border-blue-900 p-1" value="1">
-                        <select class="w-16 bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm text-center focus:outline-none">
+
+                        <!-- KELOMPOKKAN DENGAN CLASS 'rincian-field' -->
+                        <span class="text-gray-500 rincian-field">:</span>
+                        <input type="number" oninput="calculateTotalPenawaran()" class="qty rincian-field w-16 text-center border-b border-gray-200 focus:outline-none focus:border-blue-900 p-1" value="1">
+                        <select class="rincian-field w-16 bg-transparent focus:bg-gray-50 border border-transparent focus:border-gray-300 rounded p-1 text-sm text-center focus:outline-none">
                             <option value="pcs">Pcs</option>
                             <option value="m&sup2">m&sup2;</option>
                             <option value="meter">Mtr</option>
                             <option value="roll">Roll</option>
                             <option value="Box">Box</option>
                             <option value="set">Set</option>
-                            <option value="roll">Btg</option>
-                            <option value="Box">Lbr</option>
-                            <option value="set">Trap</option>
                         </select>
-                        <span class="text-gray-500">x</span>
-                        <span class="text-gray-600 font-medium">Rp</span>
-                        <input type="text" oninput="formatInputPrice(this); calculateTotalPenawaran()" class="price w-20 text-right border-b border-gray-200 focus:outline-none focus:border-blue-900 p-1" placeholder="0">
-                        <span class="text-gray-500">=</span>
-                        
-                        <!-- HAPUS 'Rp' MANUALL DI SINI, BIARKAN JS YANG ISI SERTA 'Rp'-NYA -->
-                        <span class="row-total font-bold text-right p-1" style="width: 120px !important; flex-shrink: 0 !important; white-space: nowrap !important; display: inline-block !important;">
+                        <span class="text-gray-500 rincian-field">x</span>
+                        <span class="text-gray-600 font-medium rincian-field">Rp</span>
+                        <input type="text" oninput="formatInputPrice(this); calculateTotalPenawaran()" class="price rincian-field w-20 text-right border-b border-gray-200 focus:outline-none focus:border-blue-900 p-1" placeholder="0">
+                        <span class="text-gray-500 rincian-field">=</span>
+
+                        <span class="row-total font-bold text-right p-1" style="width: 120px !important;">
                             Rp 0
                         </span>
                         <button onclick="removeRow(this)" class="btn-remove-row text-red-500 hover:text-red-700 font-bold px-2 no-print">✕</button>
@@ -207,6 +206,10 @@
                 <div class="flex items-center space-x-2 mb-6 no-print">
                     <button onclick="addRowPenawaran()" class="bg-blue-900 hover:bg-blue-800 text-white text-xs font-semibold py-1.5 px-3 rounded shadow-sm transition">
                         + Tambah Barang
+                    </button>
+                    <!-- Tombol Toggle Hide/Show Rincian -->
+                    <button type="button" onclick="toggleRincianHarga()" id="btn-toggle-rincian" class="bg-gray-600 hover:bg-gray-700 text-white text-xs font-semibold py-1.5 px-3 rounded shadow-sm transition">
+                        👁️ Sembunyikan Rincian
                     </button>
                 </div>
 

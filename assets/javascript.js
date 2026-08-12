@@ -1,5 +1,36 @@
 // Set tanggal hari ini secara otomatis saat halaman dibukadocument.getElementById('tanggal-nota').valueAsDate = new Date();
  
+let isRincianHidden = false;
+
+function toggleRincianHarga() {
+    isRincianHidden = !isRincianHidden;
+    
+    // Ambil semua elemen yang memiliki class rincian-field
+    const rincianElements = document.querySelectorAll('.item-row');
+    const btnToggle = document.getElementById('btn-toggle-rincian');
+
+    rincianElements.forEach(el => {
+        if (isRincianHidden) {
+            el.classList.add('hidden');
+        } else {
+            el.classList.remove('hidden');
+        }
+    });
+
+    // Ubah teks dan warna tombol
+    if (btnToggle) {
+        if (isRincianHidden) {
+            btnToggle.innerHTML = '👁️ Tampilkan Rincian';
+            btnToggle.classList.remove('bg-gray-600', 'hover:bg-gray-700');
+            btnToggle.classList.add('bg-emerald-700', 'hover:bg-emerald-800');
+        } else {
+            btnToggle.innerHTML = '👁️ Sembunyikan Rincian';
+            btnToggle.classList.remove('bg-emerald-700', 'hover:bg-emerald-800');
+            btnToggle.classList.add('bg-gray-600', 'hover:bg-gray-700');
+        }
+    }
+}
+
 // 1. Munculkan nomor '1. ' otomatis saat textarea pertama kali diklik/fokus
 function initNumbering(el) {
     if (el.value.trim() === '') {
