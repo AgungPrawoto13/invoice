@@ -1,5 +1,5 @@
 import os
-import psycopg2
+import psycopg2 
 import json
 from datetime import datetime
 from flask import Flask, request, jsonify

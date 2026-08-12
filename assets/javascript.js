@@ -6,7 +6,7 @@ function toggleRincianHarga() {
     isRincianHidden = !isRincianHidden;
     
     // Ambil semua elemen yang memiliki class rincian-field
-    const rincianElements = document.querySelectorAll('.item-row');
+    const rincianElements = document.querySelectorAll('.sembunyikan');
     const btnToggle = document.getElementById('btn-toggle-rincian');
 
     rincianElements.forEach(el => {
@@ -134,7 +134,7 @@ function addRowPenawaran() {
     const rowCount = itemList.querySelectorAll('.item-row').length + 1;
 
     const newRow = document.createElement('div');
-    newRow.className = 'item-row flex items-center gap-2 group';
+    newRow.className = 'item-row sembunyikan flex items-center gap-2 group';
     newRow.innerHTML = `
         <span class="row-num w-6 text-right">1.</span>
         <textarea 

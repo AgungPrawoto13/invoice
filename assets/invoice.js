@@ -3,7 +3,7 @@ async function saveInvoice(){
         invoice_date: document.getElementById('date-invoice')?.value || '',
         customer_name: document.getElementById('kepada-yth')?.value || '',
         customer_address: document.getElementById('address')?.value || '',
-        total_amount: parseInt(
+        total_amount: parseInt( 
             (document.getElementById('total-jumlah')?.innerText || '0').replace(/[^0-9]/g, ''), 10
         ) || 0,
         discount: document.getElementById('discount')?.value || 0,
